@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently --kill-others \"pnpm run db:start\" \"wait-on tcp:5432 && pnpm run dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -20,6 +20,7 @@
     "autoprefixer": "10.4.14",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "concurrently": "8.0.1",
     "next": "13.4.3",
     "prettier": "^2.8.8",
     "wait-on": "7.0.1",
