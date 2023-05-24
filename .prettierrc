@@ -1,0 +1,20 @@
+{
+    "printWidth": 80,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "semi": true,
+    "importOrder": [
+      "^react",
+      "<TYPES>",
+      "<TYPES>^[./]",
+      "<THIRD_PARTY_MODULES>",
+      "",
+      "^@scrib/(.*)$",
+      "",
+      "^@/(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  }
+  
