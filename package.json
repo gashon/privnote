@@ -6,7 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "db:start": "docker run --name secret_send_db -e POSTGRES_PASSWORD=postgres POSTGRES_DB=secret_send -p 5432:5432 postgres",
+    "db:stop": "docker stop secret_send_db && docker rm secret_send_db",
+    "db:reset": "docker exec -it secret_send_db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'"
   },
   "dependencies": {
     "@types/node": "20.2.3",
@@ -16,6 +21,8 @@
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
     "next": "13.4.3",
+    "prettier": "^2.8.8",
+    "wait-on": "7.0.1",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
