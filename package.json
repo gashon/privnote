@@ -9,7 +9,7 @@
     "lint": "next lint",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
-    "db:start": "docker run -v ./data:/var/lib/postgresql/data --name secret-send-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=secret_send -p 5432:5432 postgres",
+    "db:start": "docker run -v data:/var/lib/postgresql/data --name secret-send-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=secret_send -e POSTGRES_USER=postgres -p 5432:5432 postgres",
     "db:stop": "docker stop secret-send-db && docker rm secret-send-db",
     "db:reset": "docker exec -it secret-send-db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'",
     "db:migrate": "node -r esbuild-runner/register  src/db/migrations/migrator.ts",

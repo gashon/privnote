@@ -6,11 +6,11 @@ export const db = new Kysely<Database>({
   // Use MysqlDialect for MySQL and SqliteDialect for SQLite.
   dialect: new PostgresDialect({
     pool: new Pool({
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      database: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
+      host: process.env.POSTGRES_DB,
+      port: Number(process.env.POSTGRES_PORT),
+      database: process.env.POSTGRES_NAME,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
     }),
   }),
 });
