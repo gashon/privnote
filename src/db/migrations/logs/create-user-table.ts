@@ -7,7 +7,17 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('last_upload', 'timestamp')
     .addColumn('created_at', 'timestamp', (col) =>
       col.defaultTo(sql`now()`).notNull(),
-    );
+    )
+    .addColumn('updated_at', 'timestamp', (col) =>
+      col.defaultTo(sql`now()`).notNull(),
+    )
+    .execute();
+
+  await db.schema
+    .createIndex('user_id_index')
+    .on('user')
+    .column('id')
+    .execute();
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
