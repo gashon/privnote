@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { Pool } from 'pg';
-import { Kysely, PostgresDialect } from 'kysely';
+import { Kysely, PostgresDialect, CamelCasePlugin } from 'kysely';
 import { Database } from '@/db/models';
 
 export const db = new Kysely<Database>({
@@ -14,4 +14,5 @@ export const db = new Kysely<Database>({
       password: process.env.POSTGRES_PASSWORD,
     }),
   }),
+  plugins: [new CamelCasePlugin()],
 });
