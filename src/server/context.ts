@@ -1,6 +1,6 @@
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
-import { getAnonymousId } from '@/server/utils';
+import { findOrCreateAnonymousUser } from '@/server/utils';
 import { db } from '@/server/db';
 
 /**
@@ -33,8 +33,7 @@ export async function createContextInner(opts: CreateInnerContextOptions) {
  * @see https://trpc.io/docs/context#inner-and-outer-context
  */
 export async function createContext(opts: CreateNextContextOptions) {
-  const userId = getAnonymousId(opts.req, opts.res);
-
+  const userId = await findOrCreateAnonymousUser(opts.req, opts.res);
   const contextInner = await createContextInner({ userId });
 
   return {

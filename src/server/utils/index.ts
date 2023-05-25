@@ -1,1 +1,1 @@
-export * from './get-anonymous-id';
+export * from './find-or-create-anonymous-user';
