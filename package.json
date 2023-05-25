@@ -14,6 +14,9 @@
     "db:reset": "docker exec -it secret-send-db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.7",
+    "@trpc/client": "^10.27.3",
+    "@trpc/react-query": "^10.27.3",
     "@trpc/server": "^10.27.3",
     "@types/uuid": "^9.0.1",
     "autoprefixer": "10.4.14",
