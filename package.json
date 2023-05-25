@@ -12,9 +12,9 @@
     "db:start": "docker run --rm -v data:/var/lib/postgresql/data --name secret-send-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=secret_send -e POSTGRES_USER=postgres -p 5431:5432 postgres",
     "db:stop": "docker stop secret-send-db && docker rm secret-send-db",
     "db:reset": "docker exec -it secret-send-db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'",
-    "db:migrate": "node -r esbuild-runner/register  src/db/migrations/scripts/to-latest.ts && pnpm db:types:generate",
-    "db:migrate:undo:all": "node -r esbuild-runner/register  src/db/migrations/scripts/drop-all.ts && pnpm db:types:generate",
-    "db:types:generate": "kysely-codegen --dialect postgres --camel-case --out-file src/db/types.d.ts",
+    "db:migrate": "node -r esbuild-runner/register  src/server/db/migrations/scripts/to-latest.ts && pnpm db:types:generate",
+    "db:migrate:undo:all": "node -r esbuild-runner/register  src/server/db/migrations/scripts/drop-all.ts && pnpm db:types:generate",
+    "db:types:generate": "kysely-codegen --dialect postgres --camel-case --out-file src/server/db/types.d.ts",
     "lhci:mobile": "lhci autorun",
     "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
   },
@@ -37,7 +37,8 @@
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
     "uuid": "^9.0.0",
-    "wait-on": "7.0.1"
+    "wait-on": "7.0.1",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "20.2.3",

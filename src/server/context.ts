@@ -1,6 +1,7 @@
 import type { inferAsyncReturnType } from '@trpc/server';
 import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { getAnonymousId } from '@/server/utils';
+import { db } from '@/server/db';
 
 /**
  * Defines your inner context shape.
@@ -21,7 +22,7 @@ interface CreateInnerContextOptions extends Partial<CreateNextContextOptions> {
  */
 export async function createContextInner(opts: CreateInnerContextOptions) {
   return {
-    prisma,
+    db,
     userId: opts.userId,
   };
 }

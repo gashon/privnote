@@ -3,10 +3,8 @@ import { Kysely, sql } from 'kysely';
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable('secret')
-    .addColumn('id', 'serial', (col) => col.primaryKey())
-    .addColumn('owner_id', 'integer', (col) =>
-      col.notNull().references('user.id'),
-    )
+    .addColumn('id', 'uuid', (col) => col.primaryKey())
+    .addColumn('owner_id', 'uuid', (col) => col.notNull().references('user.id'))
     .addColumn('key', 'varchar', (col) => col.unique().notNull())
     .addColumn('token', 'varchar', (col) => col.notNull())
     .addColumn('views', 'integer', (col) => col.notNull().defaultTo(0))

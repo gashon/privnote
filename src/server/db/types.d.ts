@@ -7,8 +7,8 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Secret {
-  id: Generated<number>;
-  ownerId: number;
+  id: string;
+  ownerId: string;
   key: string;
   token: string;
   views: Generated<number>;
@@ -20,7 +20,7 @@ export interface Secret {
 }
 
 export interface User {
-  id: Generated<number>;
+  id: string;
   lastUpload: Timestamp | null;
   createdAt: Generated<Timestamp>;
   updatedAt: Generated<Timestamp>;
