@@ -8,6 +8,50 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 export const secretRouter = router({
+  get: publicProcedure
+    .input(z.object({ key: z.string().min(1) }))
+    .query(async ({ input, ctx }) => {
+      const secret = await ctx.db
+        .selectFrom('secret')
+        .select(['token', 'maxViews', 'views', 'deletedAt'])
+        .where('key', '=', input.key)
+        .executeTakeFirst();
+
+      if (!secret || secret.deletedAt !== null) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Secret not found',
+        });
+      }
+
+      if (secret.maxViews !== -1 && secret.views == secret.maxViews) {
+        await ctx.db
+          .updateTable('secret')
+          .set({
+            deletedAt: new Date(),
+          })
+          .where('key', '=', input.key)
+          .execute();
+
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Secret not found',
+        });
+      }
+
+      await ctx.db
+        .updateTable('secret')
+        .set({
+          views: secret.views + 1,
+        })
+        .where('key', '=', input.key)
+        .execute();
+
+      return {
+        token: secret.token,
+      };
+    }),
+
   create: publicProcedure
     .input(
       z.object({
@@ -17,7 +61,7 @@ export const secretRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const dbKey = uuidv4();
-      const secret = await ctx.db
+      await ctx.db
         .insertInto('secret')
         .values({
           token: input.token,
