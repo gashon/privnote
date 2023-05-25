@@ -1,9 +1,15 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
 import { Database } from '@/db/models';
 
+console.log(
+  'connecting to',
+  process.env.POSTGRES_DB,
+  process.env.POSTGRES_PORT,
+);
 export const db = new Kysely<Database>({
-  // Use MysqlDialect for MySQL and SqliteDialect for SQLite.
   dialect: new PostgresDialect({
     pool: new Pool({
       host: process.env.POSTGRES_DB,
