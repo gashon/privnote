@@ -14,6 +14,8 @@
     "db:reset": "docker exec -it secret-send-db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'"
   },
   "dependencies": {
+    "@trpc/server": "^10.27.3",
+    "@types/uuid": "^9.0.1",
     "autoprefixer": "10.4.14",
     "concurrently": "8.0.1",
     "eslint": "8.41.0",
@@ -25,6 +27,7 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
+    "uuid": "^9.0.0",
     "wait-on": "7.0.1"
   },
   "devDependencies": {
