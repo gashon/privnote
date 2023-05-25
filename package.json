@@ -12,7 +12,7 @@
     "db:start": "docker run -v ./data:/var/lib/postgresql/data --name secret-send-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=secret_send -p 5432:5432 postgres",
     "db:stop": "docker stop secret-send-db && docker rm secret-send-db",
     "db:reset": "docker exec -it secret-send-db psql -U postgres -c 'DROP DATABASE IF EXISTS secret_send'",
-    "db:migrate": "ts-node src/db/migrations/migrator",
+    "db:migrate": "node -r esbuild-runner/register  src/db/migrations/migrator.ts",
     "lhci:mobile": "lhci autorun",
     "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
   },
@@ -41,8 +41,9 @@
     "@types/pg": "^8.10.1",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
+    "esbuild": "^0.17.19",
+    "esbuild-runner": "^2.2.2",
     "kysely": "^0.24.2",
-    "pg": "^8.11.0",
-    "ts-node": "^10.9.1"
+    "pg": "^8.11.0"
   }
 }

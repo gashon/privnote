@@ -9,7 +9,7 @@ async function migrateToLatest() {
     provider: new FileMigrationProvider({
       fs,
       path,
-      migrationFolder: './logs',
+      migrationFolder: `${__dirname}/logs`,
     }),
   });
 
