@@ -2,9 +2,9 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect, CamelCasePlugin } from 'kysely';
-import { Database } from '@/db/models';
+import { DB } from '@/db/types';
 
-export const db = new Kysely<Database>({
+export const db = new Kysely<DB>({
   dialect: new PostgresDialect({
     pool: new Pool({
       host: process.env.POSTGRES_HOST,
