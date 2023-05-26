@@ -1,6 +1,6 @@
 'use client';
 import { trpc } from '@/lib';
-import { SecretContainer } from '@/components/secret-container';
+import { SecretContainer } from '@/features/secret/components/secret-container';
 import { useSearchParams } from 'next/navigation';
 export default function SecretPage() {
   const searchParams = useSearchParams();
