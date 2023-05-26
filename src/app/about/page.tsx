@@ -33,7 +33,9 @@ export default function Home() {
             secret messages. The message is encrypted on your computer and
             decrypted on the recipient's computer. You have access to detailed
             view logs and fine-grained control over the message's lifetime + the
-            number of views before self destruction.
+            number of views before self destruction. No single actor (client,
+            server (vercel), and db (neon)) have enough information to decrypt
+            the message on their own.
           </p>
           <div className="flex justify-center items-center w-full flex-col">
             <Image src="/logs.png" alt="PrivNote" width={800} height={400} />
