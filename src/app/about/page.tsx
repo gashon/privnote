@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { SecretInput, RecordDropDown } from '@/features/secret';
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -35,7 +35,10 @@ export default function Home() {
             view logs and fine-grained control over the message's lifetime + the
             number of views before self destruction.
           </p>
-
+          <div className="flex justify-center items-center w-full flex-col">
+            <Image src="/logs.png" alt="PrivNote" width={800} height={400} />
+            <pre>An example of the detailed view logs.</pre>
+          </div>
           <p
             style={{
               borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
