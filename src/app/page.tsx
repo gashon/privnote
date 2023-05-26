@@ -12,10 +12,10 @@ export default function Home() {
       <div className="w-1/2 text-white py-8">
         <div className="w-full flex justify-between items-center">
           <div>
-            <h1 className="text-xl font-bold">secret send</h1>
+            <Link href="/" className="text-xl font-bold">send secrets securely</Link>
           </div>
           <Link href="/about" className="text-xl">
-            about
+            how it works
           </Link>
         </div>
 
@@ -24,7 +24,7 @@ export default function Home() {
             htmlFor="secret"
             className="block mb-4 text-3xl font-medium text-gray-900 dark:text-white"
           >
-            Send secrets securely
+            PrivNote v.2
           </label>
           <SecretInput />
         </div>
