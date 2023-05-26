@@ -75,10 +75,17 @@ function DropDownLog({
 export function RecordDropDown() {
   const secrets = trpc.secret.list.useQuery();
 
+  if (secrets.data && secrets.data.length === 0)
+    return (
+      <div className="text-white">
+        <h4>No records found.</h4>
+      </div>
+    );
+    
   return (
     <DropDown PreviewComponent={<h4>Records</h4>}>
       {!secrets.isFetched ? (
-        <p>Loading...</p>
+        <p className="opacity-50">Loading...</p>
       ) : (
         <div
           className="text-white"

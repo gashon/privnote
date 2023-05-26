@@ -38,7 +38,13 @@ export default function Home() {
             the message on their own.
           </p>
           <div className="flex justify-center items-center w-full flex-col">
-            <Image src="/logs.png" alt="PrivNote" width={800} height={400} />
+            <Image
+              src="/logs.png"
+              alt="PrivNote"
+              width={800}
+              height={400}
+              priority
+            />
             <pre>An example of the detailed view logs.</pre>
           </div>
           <p
