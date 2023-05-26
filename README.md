@@ -23,8 +23,8 @@ PrivNote v.2 is a free service that lets you send secret messages.
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/gashon/secret-send`
-2. Move into the directory: `cd secret-send`
+1. Clone the repository: `git clone https://github.com/gashon/privnote`
+2. Move into the directory: `cd privnote`
 3. Install dependencies: `pnpm install` (or `npm install` if you prefer)
 
 ## Running the Application Locally

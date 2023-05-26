@@ -93,7 +93,7 @@ export default function Home() {
           <p>
             The source code for PrivNote is available on{' '}
             <a
-              href="https://github.com/gashon/secret-send"
+              href="https://github.com/gashon/privnote"
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
