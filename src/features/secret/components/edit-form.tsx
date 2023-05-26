@@ -10,9 +10,16 @@ type FormInput = {
 };
 
 export function EditSecretForm({ secret }: any) {
-  const mutation = trpc.secret.update.useMutation({
+  const updateMutation = trpc.secret.update.useMutation({
     onSuccess: () => {
       successNotification('Record updated');
+    },
+  });
+  const deleteMutation = trpc.secret.delete.useMutation({
+    onSuccess: () => {
+      successNotification('Record deleted');
+
+      // trpc.invalidateQuery(['secret.list']);
     },
   });
   const [formInput, setFormInput] = useState<FormInput>({
@@ -82,18 +89,15 @@ export function EditSecretForm({ secret }: any) {
             value="Delete"
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
             onClick={() => {
-              trpc.secret.delete.useMutation({
+              deleteMutation.mutateAsync({
                 key: secret.key,
-                onSuccess: () => {
-                  successNotification('Record deleted');
-                },
               });
             }}
           />
 
           <input
             onClick={() => {
-              mutation.mutateAsync({
+              updateMutation.mutateAsync({
                 key: secret.key,
                 max_views: formInput.maxViews,
                 expires_at: formInput.expiresAt,

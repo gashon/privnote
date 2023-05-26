@@ -10,11 +10,57 @@ import { Secret } from '@/server/db/types';
 import { Updateable } from 'kysely';
 
 export const secretRouter = router({
+  delete: publicProcedure
+    .input(
+      z.object({
+        key: z.string().min(1),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.userId;
+      const secret = await ctx.db
+        .selectFrom('secret')
+        .select(['id', 'ownerId', 'deletedAt'])
+        .where('key', '=', input.key)
+        .where('deletedAt', 'is', null)
+        .executeTakeFirst();
+
+      if (!secret) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Secret not found',
+        });
+      }
+
+      if (secret.ownerId !== userId) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'You do not own this secret',
+        });
+      }
+
+      const update = await ctx.db
+        .updateTable('secret')
+        .set({
+          deletedAt: new Date(),
+        })
+        .where('id', '=', secret.id)
+        .execute();
+
+      return update;
+    }),
   list: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.userId;
     const secrets = await ctx.db
       .selectFrom('secret')
-      .select(['key', 'maxViews', 'views', 'expiresAt', 'createdAt'])
+      .select([
+        'key',
+        'maxViews',
+        'views',
+        'expiresAt',
+        'createdAt',
+        'deletedAt',
+      ])
       .where('ownerId', '=', userId)
       .orderBy('createdAt', 'desc')
       .orderBy('deletedAt', 'desc')
