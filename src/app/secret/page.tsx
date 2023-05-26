@@ -10,13 +10,19 @@ export default function SecretPage() {
   const secret = searchParams?.get('secret');
   if (!key || !secret) return <div>Invalid secret</div>;
 
-  const { data, error } = trpc.secret.get.useQuery({
-    key: key!,
-  });
+  const { data, error } = trpc.secret.get.useQuery(
+    {
+      key: key!,
+    },
+    {
+      enabled: !!key,
+      retry: false,
+    },
+  );
 
-if(error) {
-  errorNotification(error.message)
-}
+  if (error) {
+    errorNotification(error.message);
+  }
   return (
     <div>
       <h1>Secret</h1>
