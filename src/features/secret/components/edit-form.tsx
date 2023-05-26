@@ -30,7 +30,12 @@ export function EditSecretForm({ secret }: any) {
   });
 
   return (
-    <div className="w-full flex justify-end mb-4">
+    <div
+      className="w-full flex justify-end"
+      style={{
+        marginBottom: '3rem',
+      }}
+    >
       <form className="w-full">
         <div className="w-full flex justify-between">
           <div className="flex flex-col">
@@ -83,11 +88,19 @@ export function EditSecretForm({ secret }: any) {
           </div>
         </div>
 
-        <div className="w-full flex justify-between">
+        <div
+          className="w-full flex justify-between"
+          style={{
+            marginTop: '1rem',
+          }}
+        >
           <input
             type="button"
             value="Delete"
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            className=" text-white font-bold cursor-pointer"
+            style={{
+              borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
+            }}
             onClick={() => {
               deleteMutation.mutateAsync({
                 key: secret.key,
@@ -105,7 +118,10 @@ export function EditSecretForm({ secret }: any) {
             }}
             type="button"
             value="Update"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className=" text-white font-bold cursor-pointer"
+            style={{
+              borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
+            }}
           />
         </div>
       </form>

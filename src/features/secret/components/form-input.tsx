@@ -44,7 +44,7 @@ export function SecretInput() {
         id="secret"
         value={secretText}
         onChange={(e) => setSecretText(e.target.value)}
-        className="w-full rounded block p-2.5 text-sm text-gray-400 hover:resize-y"
+        className="w-full rounded block text-sm text-gray-400 hover:resize-y"
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.15)',
         }}
