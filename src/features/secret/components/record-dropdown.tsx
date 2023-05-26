@@ -1,6 +1,7 @@
 'use client';
 import { DropDown } from '@/components';
 import { trpc } from '@/lib';
+import { EditSecretForm } from '@/features/secret';
 
 function DropDownRecord({ secret }: any) {
   return (
@@ -35,9 +36,7 @@ export function RecordDropDown() {
       <div className="text-white">
         {secrets.data?.map((secret: any) => (
           <DropDown PreviewComponent={<DropDownRecord secret={secret} />}>
-            <div className="w-full flex justify-end">
-              <div className="w-3/4 ">Contnet</div>
-            </div>
+            <EditSecretForm secret={secret} />
           </DropDown>
         ))}
       </div>
