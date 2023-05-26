@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently --kill-others \"pnpm run db:start\" \"wait-on tcp:5432 && pnpm run dev\"",
+    "dev": "concurrently --kill-others \"pnpm run db:start\" \"wait-on tcp:5432 && next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

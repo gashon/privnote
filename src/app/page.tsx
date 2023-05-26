@@ -1,3 +1,4 @@
+'use client';
 import { useMemo, useState } from 'react';
 import { trpc } from '@/lib';
 import { generateKey } from '@/utils/crypto';
@@ -21,8 +22,12 @@ export default function Home() {
       <textarea
         value={secretText}
         onChange={(e) => setSecretText(e.target.value)}
+        className="text-black bg-white"
       />
-      <button onClick={createSecret}>Create secret</button>
+
+      <button type="submit" onClick={createSecret}>
+        Create secret
+      </button>
     </>
   );
 }

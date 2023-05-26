@@ -1,9 +1,4 @@
 import Head from 'next/head';
-export const metadata = {
-  title: 'Secret Send',
-  description: 'Send secrets securely',
-};
-
 export default function PageLayout({
   children,
 }: {
@@ -12,8 +7,8 @@ export default function PageLayout({
   return (
     <>
       <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
+        <title>Secret Send</title>
+        <meta name="description" content="Send secrets securely" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>{children}</main>

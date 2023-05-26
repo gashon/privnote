@@ -11,7 +11,9 @@ export const findOrCreateAnonymousUser = async (
   if (!uuidCookie) {
     const newUser = await db
       .insertInto('user')
-      .values({})
+      .values({
+        lastUpload: new Date(),
+      })
       .returning('id')
       .executeTakeFirst();
 
