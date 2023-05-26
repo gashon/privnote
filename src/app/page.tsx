@@ -1,22 +1,42 @@
 'use client';
 import { useMemo, useState } from 'react';
-import { trpc } from '@/lib';
+import { BsFillClipboardFill } from 'react-icons/bs';
+import { DropDown } from '@/components';
+import { trpc, successNotification, errorNotification } from '@/lib';
 import { generateKey, encryptPayload } from '@/utils/crypto';
-import { BsInfinity } from 'react-icons/bs';
 import Link from 'next/link';
 
 export default function Home() {
   const [secretText, setSecretText] = useState<string>('');
+  const [secretURL, setSecretURL] = useState<string | undefined>(
+    'http://localhost:3000/secret?key=00e3adfc-1bfb-4d0b-bec4-de71042a3bb0&secret=79e6ee7fcaba106ab7fe06400f5e1d0b',
+  );
   const secrets = trpc.secret.list.useQuery();
   const mutation = trpc.secret.create.useMutation();
   const encryptionToken = useMemo(() => generateKey(), [mutation.status]);
+
+  const copyToClipboard = async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      console.log('URL copied to clipboard:', url);
+      successNotification('URL copied to clipboard');
+    } catch (error) {
+      console.error('Failed to copy URL to clipboard:', error);
+      errorNotification('Failed to copy URL to clipboard');
+    }
+  };
 
   const createSecret = async () => {
     const secret = await mutation.mutateAsync({
       token: encryptionToken,
     });
     const encryptedText = encryptPayload(secretText, encryptionToken);
-    console.log(`/secret?key=${secret.key}&secret=${encryptedText}`);
+    const url = `${
+      process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
+    }/secret?key=${secret.key}&secret=${encryptedText}`;
+    setSecretURL(url);
+
+    await copyToClipboard(url);
   };
 
   return (
@@ -49,35 +69,47 @@ export default function Home() {
             rows={secretText.split('\n').length}
             placeholder="POSTGRES_USER=..."
           />
-          <button
-            type="submit"
-            onClick={createSecret}
-            className="w-fit"
-            style={{
-              borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
-            }}
-          >
-            Create URL
-          </button>
+          <div className="w-full flex justify-between">
+            <button
+              type="submit"
+              onClick={createSecret}
+              className="w-fit"
+              style={{
+                borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              Create URL
+            </button>
+            {secretURL && (
+              <div
+                onClick={() => copyToClipboard(secretURL)}
+                className="cursor-pointer"
+              >
+                <BsFillClipboardFill />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="text-white">
-          Prior secrets:
-          {secrets.data?.map((secret: any) => (
-            <div key={secret.key}>
-              <p>
-                Key: <strong>{secret.key}</strong>
-              </p>
-              <p className="flex flex-row items-center">
-                Views: {secret.views}
-                {secret.maxViews != -1 && `/ ${secret.maxViews}`}
-              </p>
-              <p>
-                Created At: <strong>{secret.createdAt}</strong>
-              </p>
-            </div>
-          ))}
-        </div>
+        <DropDown PreviewComponent={<h4>Records</h4>}>
+          <div className="text-white">
+            Prior secrets:
+            {secrets.data?.map((secret: any) => (
+              <div key={secret.key}>
+                <p>
+                  Key: <strong>{secret.key}</strong>
+                </p>
+                <p className="flex flex-row items-center">
+                  Views: {secret.views}
+                  {secret.maxViews != -1 && `/ ${secret.maxViews}`}
+                </p>
+                <p>
+                  Created At: <strong>{secret.createdAt}</strong>
+                </p>
+              </div>
+            ))}
+          </div>
+        </DropDown>
       </div>
     </main>
   );
