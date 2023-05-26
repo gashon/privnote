@@ -9,7 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body className="bg-neutral-900 min-w-screen min-h-screen">
+        {children}
+      </body>
     </html>
   );
 }
