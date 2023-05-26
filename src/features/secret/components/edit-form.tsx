@@ -58,6 +58,8 @@ export function EditSecretForm({ secret }: any) {
               className="text-gray-400 p-2 rounded"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                padding: 5,
+                borderRadius: 2.5,
               }}
             />
           </div>
@@ -83,6 +85,8 @@ export function EditSecretForm({ secret }: any) {
               className="text-gray-400 p-2 rounded"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                padding: 5,
+                borderRadius: 2.5,
               }}
             />
           </div>

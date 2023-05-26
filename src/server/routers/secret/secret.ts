@@ -75,7 +75,7 @@ export const secretRouter = router({
         .selectFrom('secret')
         .select(['token', 'maxViews', 'views', 'deletedAt'])
         .where('key', '=', input.key)
-        .where('deletedAt', '=', null)
+        .where('deletedAt', 'is', null)
         .executeTakeFirst();
 
       if (!secret || secret.deletedAt !== null) {

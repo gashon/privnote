@@ -13,7 +13,6 @@ export const DropDown: FC<DropDownProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  console.log('checking', disabled);
   return (
     <>
       <div

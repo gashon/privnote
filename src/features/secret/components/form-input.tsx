@@ -9,7 +9,7 @@ export function SecretInput() {
   const [secretURL, setSecretURL] = useState<string | undefined>(undefined);
   const mutation = trpc.secret.create.useMutation({
     onSuccess: () => {
-      trpc.invalidateQuery(['secret.list']);
+      // trpc.invalidateQuery(['secret.list']);
     },
   });
   const encryptionToken = useMemo(() => generateKey(), [mutation.status]);
@@ -47,6 +47,8 @@ export function SecretInput() {
         className="w-full rounded block text-sm text-gray-400 hover:resize-y"
         style={{
           backgroundColor: 'rgba(255, 255, 255, 0.15)',
+          padding: 10,
+          borderRadius: 5,
         }}
         rows={secretText.split('\n').length}
         placeholder="POSTGRES_USER=..."
