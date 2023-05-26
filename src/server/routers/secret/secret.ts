@@ -51,22 +51,43 @@ export const secretRouter = router({
     }),
   list: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.userId;
-    const secrets = await ctx.db
-      .selectFrom('secret')
-      .select([
-        'key',
-        'maxViews',
-        'views',
-        'expiresAt',
-        'createdAt',
-        'deletedAt',
-      ])
-      .where('ownerId', '=', userId)
-      .orderBy('createdAt', 'desc')
-      .orderBy('deletedAt', 'desc')
-      .execute();
+    const [secrets, logs] = await Promise.all([
+      ctx.db
+        .selectFrom(['secret'])
+        .where('secret.ownerId', '=', userId)
+        .orderBy('secret.createdAt', 'desc')
+        .orderBy('secret.deletedAt', 'desc')
+        .select([
+          'secret.key',
+          'secret.maxViews',
+          'secret.views',
+          'secret.expiresAt',
+          'secret.createdAt',
+          'secret.deletedAt',
+          'secret.id',
+        ])
+        .execute(),
+      ctx.db
+        .selectFrom(['viewLog'])
+        .where('viewLog.ownerId', '=', userId)
+        .orderBy('viewLog.createdAt', 'desc')
+        .select([
+          'viewLog.secretId',
+          'viewLog.ipAddress',
+          'viewLog.userAgent',
+          'viewLog.createdAt',
+        ])
+        .execute(),
+    ]);
 
-    return secrets;
+    const secretsWithLogs = secrets.map((secret) => {
+      const secretLogs = logs.filter((log) => log.secretId === secret.id);
+      return {
+        ...secret,
+        logs: secretLogs,
+      };
+    });
+    return secretsWithLogs;
   }),
   get: publicProcedure
     .input(z.object({ key: z.string().min(1) }))
@@ -205,6 +226,7 @@ export const secretRouter = router({
     .mutation(async ({ input, ctx }) => {
       const dbKey = uuidv4();
 
+      console.log('got owner', ctx.userId);
       await ctx.db
         .insertInto('secret')
         .values({
