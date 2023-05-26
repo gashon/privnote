@@ -35,7 +35,10 @@ export function RecordDropDown() {
     <DropDown PreviewComponent={<h4>Records</h4>}>
       <div className="text-white">
         {secrets.data?.map((secret: any) => (
-          <DropDown PreviewComponent={<DropDownRecord secret={secret} />}>
+          <DropDown
+            disabled={!!secret.deletedAt}
+            PreviewComponent={<DropDownRecord secret={secret} />}
+          >
             <EditSecretForm secret={secret} />
           </DropDown>
         ))}
