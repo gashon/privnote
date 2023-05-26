@@ -73,7 +73,7 @@ export const secretRouter = router({
     .query(async ({ input, ctx }) => {
       const secret = await ctx.db
         .selectFrom('secret')
-        .select(['token', 'maxViews', 'views', 'deletedAt'])
+        .select(['token', 'maxViews', 'views', 'deletedAt', 'id'])
         .where('key', '=', input.key)
         .where('deletedAt', 'is', null)
         .executeTakeFirst();
@@ -100,13 +100,30 @@ export const secretRouter = router({
         });
       }
 
-      await ctx.db
-        .updateTable('secret')
-        .set({
-          views: secret.views + 1,
-        })
-        .where('key', '=', input.key)
-        .execute();
+      // update views
+      await ctx.db.transaction().execute(async (trx) => {
+        await Promise.all([
+          // increment running count
+          ctx.db
+            .updateTable('secret')
+            .set({
+              views: secret.views + 1,
+            })
+            .where('key', '=', input.key)
+            .execute(),
+          // create log record
+          trx
+            .insertInto('viewLog')
+            .values({
+              ownerId: ctx.userId,
+              viewerId: ctx.userId,
+              secretId: secret.id,
+              ipAddress: ctx.ipAddress,
+              userAgent: ctx.userAgent,
+            })
+            .execute(),
+        ]);
+      });
 
       return {
         token: secret.token,

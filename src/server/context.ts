@@ -9,6 +9,8 @@ import { db } from '@/server/db';
  */
 interface CreateInnerContextOptions extends Partial<CreateNextContextOptions> {
   userId: string;
+  ipAddress: string;
+  userAgent: string;
 }
 
 /**
@@ -24,6 +26,8 @@ export async function createContextInner(opts: CreateInnerContextOptions) {
   return {
     db,
     userId: opts.userId,
+    ipAddress: opts.ipAddress,
+    userAgent: opts.userAgent,
   };
 }
 
@@ -34,7 +38,11 @@ export async function createContextInner(opts: CreateInnerContextOptions) {
  */
 export async function createContext(opts: CreateNextContextOptions) {
   const userId = await findOrCreateAnonymousUser(opts.req, opts.res);
-  const contextInner = await createContextInner({ userId });
+  const contextInner = await createContextInner({
+    userId,
+    ipAddress: opts.req.headers['x-forwarded-for'] as string,
+    userAgent: opts.req.headers['user-agent'] as string,
+  });
 
   return {
     ...contextInner,
