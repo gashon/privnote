@@ -12,7 +12,7 @@ export const db = new Kysely<DB>({
       database: process.env.POSTGRES_DB,
       user: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
-      ssl: true,
+      ssl: process.env.NO_SSL === 'true' ? false : true,
     }),
   }),
   plugins: [new CamelCasePlugin()],
