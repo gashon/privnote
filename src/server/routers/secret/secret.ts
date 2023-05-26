@@ -124,6 +124,7 @@ export const secretRouter = router({
       z.object({
         token: z.string().min(1),
         max_views: z.number().int().optional(),
+        expires_at: z.number().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -135,6 +136,7 @@ export const secretRouter = router({
           key: dbKey,
           maxViews: input.max_views ?? -1,
           ownerId: ctx.userId,
+          expiresAt: input.expires_at ? new Date(input.expires_at) : null,
         })
         .execute();
 
