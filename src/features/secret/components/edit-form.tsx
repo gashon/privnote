@@ -117,7 +117,9 @@ export function EditSecretForm({ secret }: any) {
               updateMutation.mutateAsync({
                 key: secret.key,
                 max_views: formInput.maxViews,
-                expires_at: formInput.expiresAt,
+                expires_at: formInput.expiresAt
+                  ? new Date(formInput.expiresAt).getTime()
+                  : undefined,
               });
             }}
             type="button"
