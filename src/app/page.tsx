@@ -6,7 +6,7 @@ import { generateKey } from '@/utils/crypto';
 export default function Home() {
   const [secretText, setSecretText] = useState<string>('');
   const mutation = trpc.secret.create.useMutation();
-  const encryptionToken = useMemo(() => generateKey(), []);
+  const encryptionToken = useMemo(() => generateKey(), [mutation.status]);
 
   const createSecret = async () => {
     const secret = await mutation.mutateAsync({

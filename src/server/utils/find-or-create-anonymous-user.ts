@@ -8,6 +8,7 @@ export const findOrCreateAnonymousUser = async (
 ): Promise<string> => {
   const uuidCookie = req.cookies[UUID_COOKIE_NAME];
 
+  console.log('GOT cookie', uuidCookie);
   if (!uuidCookie) {
     const newUser = await db
       .insertInto('user')
