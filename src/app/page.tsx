@@ -93,19 +93,26 @@ export default function Home() {
 
         <DropDown PreviewComponent={<h4>Records</h4>}>
           <div className="text-white">
-            Prior secrets:
             {secrets.data?.map((secret: any) => (
-              <div key={secret.key}>
-                <p>
-                  Key: <strong>{secret.key}</strong>
+              <div key={secret.key} className="flex flex-row gap-4 w-full my-2">
+                <p className="w-1/4 border-r-2 border-white opacity-50">
+                  {secret.createdAt}
                 </p>
-                <p className="flex flex-row items-center">
-                  Views: {secret.views}
-                  {secret.maxViews != -1 && `/ ${secret.maxViews}`}
-                </p>
-                <p>
-                  Created At: <strong>{secret.createdAt}</strong>
-                </p>
+
+                <div className="w-3/4">
+                  <p className="w-full">
+                    Key: <strong>{secret.key}</strong>
+                  </p>
+                  <div className="w-full flex justify-between items-center">
+                    <p className="flex flex-row items-center">
+                      Views: {secret.views}
+                      {secret.maxViews != -1 && `/ ${secret.maxViews}`}
+                    </p>
+                    <p className="opacity-75">
+                      {!secret.deletedAt ? 'Active' : 'Deleted'}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
