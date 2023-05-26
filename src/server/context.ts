@@ -40,7 +40,9 @@ export async function createContext(opts: CreateNextContextOptions) {
   const userId = await findOrCreateAnonymousUser(opts.req, opts.res);
   const contextInner = await createContextInner({
     userId,
-    ipAddress: opts.req.headers['x-forwarded-for'] as string,
+    ipAddress: (opts.req.headers['x-real-ip'] ??
+      opts.req.headers['x-forwarded-for'] ??
+      opts.req.socket.remoteAddress) as string,
     userAgent: opts.req.headers['user-agent'] as string,
   });
 

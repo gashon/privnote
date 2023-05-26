@@ -226,7 +226,6 @@ export const secretRouter = router({
     .mutation(async ({ input, ctx }) => {
       const dbKey = uuidv4();
 
-      console.log('got owner', ctx.userId);
       await ctx.db
         .insertInto('secret')
         .values({
