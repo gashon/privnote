@@ -19,7 +19,7 @@ export function EditSecretForm({ secret }: any) {
     key: secret.key,
     token: secret.token,
     maxViews: secret.maxViews,
-    expiresAt: secret.expiresAt,
+    expiresAt: secret.expiresAt ?? undefined,
   });
 
   return (
@@ -55,7 +55,7 @@ export function EditSecretForm({ secret }: any) {
               htmlFor="max_views"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Expires at
+              Allowed views
             </label>
             <input
               id="max_views"
