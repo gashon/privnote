@@ -51,7 +51,61 @@ export const secretRouter = router({
         token: secret.token,
       };
     }),
+  update: publicProcedure
+    .input(
+      z.object({
+        key: z.string().min(1),
+        token: z.string().min(1).optional(),
+        max_views: z.number().int().optional(),
+        delete: z.boolean().optional(),
+        expires_at: z.number().optional(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const secret = await ctx.db
+        .selectFrom('secret')
+        .select([
+          'token',
+          'maxViews',
+          'views',
+          'deletedAt',
+          'ownerId',
+          'expiresAt',
+        ])
+        .where('key', '=', input.key)
+        .executeTakeFirst();
 
+      if (!secret || secret.deletedAt !== null) {
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Secret not found',
+        });
+      }
+
+      if (secret.ownerId !== ctx.userId) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Unauthorized',
+        });
+      }
+
+      const updatePayload = {
+        token: input.token ?? secret.token,
+        maxViews: input.max_views ?? secret.maxViews,
+        deletedAt: input.delete ? new Date() : secret.deletedAt,
+        expiresAt: input.expires_at
+          ? new Date(input.expires_at)
+          : secret?.expiresAt,
+      };
+
+      await ctx.db
+        .updateTable('secret')
+        .set(updatePayload)
+        .where('key', '=', input.key)
+        .execute();
+
+      return updatePayload;
+    }),
   create: publicProcedure
     .input(
       z.object({
