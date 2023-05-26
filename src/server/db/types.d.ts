@@ -26,7 +26,20 @@ export interface User {
   updatedAt: Generated<Timestamp>;
 }
 
+export interface ViewLog {
+  id: Generated<string>;
+  ownerId: string;
+  viewerId: string;
+  secretId: string;
+  ipAddress: string;
+  userAgent: string;
+  deletedAt: Timestamp | null;
+  createdAt: Generated<Timestamp>;
+  updatedAt: Generated<Timestamp>;
+}
+
 export interface DB {
   secret: Secret;
   user: User;
+  viewLog: ViewLog;
 }
