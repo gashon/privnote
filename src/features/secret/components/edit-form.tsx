@@ -23,14 +23,8 @@ export function EditSecretForm({ secret }: any) {
   });
 
   return (
-    <div className="w-full flex justify-end">
-      <form
-        onClick={(e) => {
-          e.preventDefault();
-          //   mutation.mutateAsync(formInput);
-        }}
-        className="w-full"
-      >
+    <div className="w-full flex justify-end mb-4">
+      <form className="w-full">
         <div className="w-full flex justify-between">
           <div className="flex flex-col">
             <label
@@ -42,13 +36,16 @@ export function EditSecretForm({ secret }: any) {
             <input
               id="expires_at"
               type="date"
-              value={formInput.expiresAt}
+              value={
+                secret.expiresAt &&
+                new Date(secret.expiresAt).toISOString().substr(0, 10)
+              }
               onChange={(e) =>
                 setFormInput({ ...formInput, expiresAt: e.target.value })
               }
-              className="text-gray-400 p-2.5 rounded"
+              className="text-gray-400 p-2 rounded"
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
               }}
             />
           </div>
@@ -71,9 +68,9 @@ export function EditSecretForm({ secret }: any) {
                   maxViews: parseInt(e.target.value),
                 })
               }
-              className="text-gray-400 p-2.5 rounded"
+              className="text-gray-400 p-2 rounded"
               style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
               }}
             />
           </div>
@@ -95,7 +92,14 @@ export function EditSecretForm({ secret }: any) {
           />
 
           <input
-            type="submit"
+            onClick={() => {
+              mutation.mutateAsync({
+                key: secret.key,
+                max_views: formInput.maxViews,
+                expires_at: formInput.expiresAt,
+              });
+            }}
+            type="button"
             value="Update"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           />

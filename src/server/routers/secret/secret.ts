@@ -6,6 +6,8 @@ import { router, publicProcedure } from '@/server/lib';
 import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { Secret } from '@/server/db/types';
+import { Updateable } from 'kysely';
 
 export const secretRouter = router({
   list: publicProcedure.query(async ({ ctx }) => {
@@ -102,14 +104,24 @@ export const secretRouter = router({
         });
       }
 
-      const updatePayload = {
-        token: input.token ?? secret.token,
-        maxViews: input.max_views ?? secret.maxViews,
-        deletedAt: input.delete ? new Date() : secret.deletedAt,
-        expiresAt: input.expires_at
-          ? new Date(input.expires_at)
-          : secret?.expiresAt,
-      };
+      let updatePayload: Updateable<Secret> = {};
+
+      if (input.expires_at) {
+        //@ts-ignore
+        updatePayload.expiresAt = new Date(input.expires_at);
+      }
+
+      if (input.max_views) {
+        //@ts-ignore
+        updatePayload.maxViews = input.max_views;
+      }
+      if (input.delete) {
+        //@ts-ignore
+        updatePayload.deletedAt = new Date();
+      }
+      if (input.token) {
+        updatePayload.token = input.token;
+      }
 
       await ctx.db
         .updateTable('secret')
@@ -129,6 +141,7 @@ export const secretRouter = router({
     )
     .mutation(async ({ input, ctx }) => {
       const dbKey = uuidv4();
+
       await ctx.db
         .insertInto('secret')
         .values({
