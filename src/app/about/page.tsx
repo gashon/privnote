@@ -32,7 +32,7 @@ export default function Home() {
             <span>TLDR:</span> PrivNote is a free service that lets you send
             secret messages. The message is encrypted on your computer and
             decrypted on the recipient's computer. You have access to detailed
-            view logs and fine-grained control over the message's lifetime /
+            view logs and fine-grained control over the message's lifetime + the
             number of views before self destruction.
           </p>
 
@@ -45,7 +45,7 @@ export default function Home() {
             Secrets are never sent to our server. Instead, we generate a link
             that you can share with the recipient. The link contains the secret
             encrypted and encoded in the URL itself. The secret is never written
-            to disk.
+            to disk in any form.
           </p>
 
           <p
@@ -54,15 +54,11 @@ export default function Home() {
               paddingLeft: 10,
             }}
           >
-            The client generates a random key (with 256 bits of entropy) and a
-            random salt (with 128 bits of entropy). The key is used to encrypt
-            the secret with AES-256-GCM. The salt is used to derive a key from
-            the password using PBKDF2-HMAC-SHA256. The salt and the encrypted
-            secret are encoded in the URL using base64url. The key is encrypted
-            with the password using AES-256-GCM and encoded in the URL using
-            base64url. The key is then encrypted with the recipient's public
-            key, which is retrieved from the server. The encrypted key is
-            encoded in the URL using base64url.
+            The client generates a random key (with 256 bits of entropy). The
+            key is used to encrypt the secret with AES-256-GCM. The key is then
+            sent to the server and stored in a database. The server returns a
+            token to the client. The token is used to retrieve the key from the
+            server when the recipient views the secret.
           </p>
 
           <p
@@ -71,7 +67,7 @@ export default function Home() {
               paddingLeft: 10,
             }}
           >
-            By storing the encrypted key on the server, we can monitor and log
+            By storing the encryption key on the server, we can monitor and log
             when the secret is viewed. The server also enforces a maximum number
             of views. Once the maximum number of views is reached, the
             encryption token is invalidated by the server.

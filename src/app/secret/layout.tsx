@@ -12,7 +12,7 @@ export default function PageLayout({
         <meta name="description" content="Send secrets securely" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>{children}</main>
+      <>{children}</>
     </>
   );
 }

@@ -1,6 +1,5 @@
 'use client';
-import { DropDown } from '@/components';
-import { trpc, successNotification, errorNotification } from '@/lib';
+import { trpc } from '@/lib';
 import Link from 'next/link';
 import { SecretInput, RecordDropDown } from '@/features/secret';
 
@@ -12,7 +11,9 @@ export default function Home() {
       <div className="w-1/2 text-white py-8">
         <div className="w-full flex justify-between items-center">
           <div>
-            <Link href="/" className="text-xl font-bold">send secrets securely</Link>
+            <Link href="/" className="text-xl font-bold">
+              send secrets securely
+            </Link>
           </div>
           <Link href="/about" className="text-xl">
             how it works
