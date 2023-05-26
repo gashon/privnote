@@ -8,6 +8,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 export const secretRouter = router({
+  list: publicProcedure.query(async ({ ctx }) => {
+    const userId = ctx.userId;
+    const secrets = await ctx.db
+      .selectFrom('secret')
+      .select(['key', 'maxViews', 'views', 'expiresAt', 'createdAt'])
+      .where('ownerId', '=', userId)
+      .orderBy('createdAt', 'desc')
+      .orderBy('deletedAt', 'desc')
+      .execute();
+
+    return secrets;
+  }),
   get: publicProcedure
     .input(z.object({ key: z.string().min(1) }))
     .query(async ({ input, ctx }) => {
@@ -15,6 +27,7 @@ export const secretRouter = router({
         .selectFrom('secret')
         .select(['token', 'maxViews', 'views', 'deletedAt'])
         .where('key', '=', input.key)
+        .where('deletedAt', '=', null)
         .executeTakeFirst();
 
       if (!secret || secret.deletedAt !== null) {
