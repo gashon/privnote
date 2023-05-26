@@ -1,7 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import { trpc } from '@/lib';
-import { generateKey } from '@/utils/crypto';
+import { generateKey, encryptPayload } from '@/utils/crypto';
 
 export default function Home() {
   const [secretText, setSecretText] = useState<string>('');
@@ -12,7 +12,8 @@ export default function Home() {
     const secret = await mutation.mutateAsync({
       token: encryptionToken,
     });
-    console.log(secret);
+    const encryptedText = encryptPayload(secretText, encryptionToken);
+    console.log(`/secret?key=${secret.key}&secret=${encryptedText}`);
   };
 
   return (
