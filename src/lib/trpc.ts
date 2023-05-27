@@ -2,6 +2,10 @@ import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '@/server/routers';
 import { httpBatchLink } from '@trpc/client';
 
+const url = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
+  : 'http://localhost:3000/api/trpc';
+
 export const trpc = createTRPCNext<AppRouter>({
   config() {
     return {
@@ -20,9 +24,7 @@ export const trpc = createTRPCNext<AppRouter>({
         );
         // The server needs to know your app's full url
         // On render.com you can use `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}/api/trpc`
-        const url = process.env.NEXT_PUBLIC_VERCEL_URL
-          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc`
-          : 'http://localhost:3000/api/trpc';
+
         return {
           url,
           /**
@@ -52,7 +54,7 @@ export const trpc = createTRPCNext<AppRouter>({
       },
       links: [
         httpBatchLink({
-          url: 'http://localhost:3000/api/trpc',
+          url,
           // You can pass any HTTP headers you wish here
           async headers() {
             return {};
