@@ -50,22 +50,30 @@ export default function Home() {
               paddingLeft: 10,
             }}
           >
-            Secrets are never sent to our server. We employs symmetric-key
+            Secrets are never sent to our server. We employ symmetric-key
             cryptography, specifically the AES-256-GCM (Advanced Encryption
             Standard with a 256-bit key size using Galois/Counter Mode)
-            algorithm. Here's a brief overview of how it works: The client
-            generates a random key with 256 bits of entropy. This key is then
-            used to encrypt the secret message, transforming it into a
-            ciphertext. The encryption key is sent to the server and stored in a
-            database. The server returns a token to the client. This token is
-            used to retrieve the key from the server when the secret message
-            needs to be viewed. When the secret message is accessed, the server
-            uses the token to fetch the key, and the client uses this key to
-            decrypt the message. AES-256-GCM is a popular encryption algorithm
-            widely used in various sectors because it provides confidentiality,
-            integrity, and origin authenticity.
+            algorithm.
           </p>
 
+          <p
+            style={{
+              borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
+              paddingLeft: 10,
+            }}
+          >
+            Here's a brief overview of how it works: The client generates a
+            random key with 256 bits of entropy. This key is then used to
+            encrypt the secret message, transforming it into a ciphertext. The
+            encryption key is sent to the server and stored in a database. The
+            server returns a token to the client. This token is used to retrieve
+            the key from the server when the secret message needs to be viewed.
+            When the secret message is accessed, the server uses the token to
+            fetch the key, and the client uses this key to decrypt the message.
+            AES-256-GCM is a popular encryption algorithm widely used in various
+            sectors because it provides confidentiality, integrity, and origin
+            authenticity.
+          </p>
           <p
             style={{
               borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
