@@ -81,7 +81,7 @@ export function RecordDropDown() {
         <h4>No records found.</h4>
       </div>
     );
-    
+
   return (
     <DropDown PreviewComponent={<h4>Records</h4>}>
       {!secrets.isFetched ? (
@@ -93,6 +93,9 @@ export function RecordDropDown() {
             marginTop: 3,
           }}
         >
+          {secrets.data?.length === 0 && (
+            <h4 className="opacity-50">No records found.</h4>
+          )}
           {secrets.data?.map((secret: any) => (
             <DropDown
               disabled={!!secret.deletedAt}
