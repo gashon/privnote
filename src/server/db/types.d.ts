@@ -8,7 +8,6 @@ export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export interface Secret {
   id: Generated<string>;
-  ownerId: string;
   key: string;
   token: string;
   views: Generated<number>;
@@ -17,29 +16,22 @@ export interface Secret {
   deletedAt: Timestamp | null;
   createdAt: Generated<Timestamp>;
   updatedAt: Generated<Timestamp>;
-}
-
-export interface User {
-  id: Generated<string>;
-  lastUpload: Timestamp | null;
-  createdAt: Generated<Timestamp>;
-  updatedAt: Generated<Timestamp>;
+  ownerId: string;
 }
 
 export interface ViewLog {
   id: Generated<string>;
-  ownerId: string;
-  viewerId: string;
   secretId: string;
   ipAddress: string;
   userAgent: string;
   deletedAt: Timestamp | null;
   createdAt: Generated<Timestamp>;
   updatedAt: Generated<Timestamp>;
+  ownerId: string;
+  viewerId: string;
 }
 
 export interface DB {
   secret: Secret;
-  user: User;
   viewLog: ViewLog;
 }
