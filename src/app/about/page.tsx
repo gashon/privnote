@@ -30,12 +30,9 @@ export default function Home() {
             }}
           >
             <span>TLDR:</span> PrivNote is a free service that lets you send
-            secret messages. The message is encrypted on your computer and
-            decrypted on the recipient's computer. You have access to detailed
-            view logs and fine-grained control over the message's lifetime + the
-            number of views before self destruction. No single actor (client,
-            server (vercel), and db (neon)) have enough information to decrypt
-            the message on their own.
+            secret messages securely (such as .env files). You have access to
+            detailed view logs and fine-grained control over the message's
+            lifetime + the number of views before self destruction.
           </p>
           <div className="flex justify-center items-center w-full flex-col">
             <Image
@@ -53,35 +50,20 @@ export default function Home() {
               paddingLeft: 10,
             }}
           >
-            Secrets are never sent to our server. Instead, we generate a link
-            that you can share with the recipient. The link contains the secret
-            encrypted and encoded in the URL itself. The secret is never written
-            to disk in any form.
-          </p>
-
-          <p
-            style={{
-              borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
-              paddingLeft: 10,
-            }}
-          >
-            The client generates a random key (with 256 bits of entropy). The
-            key is used to encrypt the secret with AES-256-GCM. The key is then
-            sent to the server and stored in a database. The server returns a
-            token to the client. The token is used to retrieve the key from the
-            server when the recipient views the secret.
-          </p>
-
-          <p
-            style={{
-              borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
-              paddingLeft: 10,
-            }}
-          >
-            By storing the encryption key on the server, we can monitor and log
-            when the secret is viewed. The server also enforces a maximum number
-            of views. Once the maximum number of views is reached, the
-            encryption token is invalidated by the server.
+            Secrets are never sent to our server. We employs symmetric-key
+            cryptography, specifically the AES-256-GCM (Advanced Encryption
+            Standard with a 256-bit key size using Galois/Counter Mode)
+            algorithm. Here's a brief overview of how it works: The client
+            generates a random key with 256 bits of entropy. This key is then
+            used to encrypt the secret message, transforming it into a
+            ciphertext. The encryption key is sent to the server and stored in a
+            database. The server returns a token to the client. This token is
+            used to retrieve the key from the server when the secret message
+            needs to be viewed. When the secret message is accessed, the server
+            uses the token to fetch the key, and the client uses this key to
+            decrypt the message. AES-256-GCM is a popular encryption algorithm
+            widely used in various sectors because it provides confidentiality,
+            integrity, and origin authenticity.
           </p>
 
           <p
@@ -91,9 +73,8 @@ export default function Home() {
             }}
           >
             PrivNote uses anonymous authentication. We do not require you to
-            create an account. We do not store your email address or any other
-            personal information. We use a single httpOnly private cookie to
-            give you access to your secrets.
+            create an account. We use a single httpOnly private cookie to give
+            you access to your secrets.
           </p>
 
           <p>
