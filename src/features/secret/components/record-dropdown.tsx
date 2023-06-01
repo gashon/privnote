@@ -103,7 +103,8 @@ export function RecordDropDown() {
             >
               <div
                 style={{
-                  marginTop: 10,
+                  marginTop: 0,
+                  marginBottom: 10,
                   marginLeft: 10,
                 }}
               >
