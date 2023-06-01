@@ -15,7 +15,7 @@ function DropDownRecord({ secret }: any) {
       }}
     >
       <p
-        className=" opacity-50"
+        className="break-words opacity-50"
         style={{
           width: '25%',
           borderRight: '1px solid white',

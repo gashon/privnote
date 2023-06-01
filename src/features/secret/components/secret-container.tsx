@@ -19,14 +19,22 @@ export function SecretContainer({
   }, [encryptedText, token]);
 
   return (
-    <div>
+    <div className="">
       {decryptedSecret && token ? (
         <>
-          <pre>Token: {token}</pre>
-          <div className="flex flex-row">
+          <pre
+            className="break-all"
+            style={{
+              overflowX: 'auto',
+              whiteSpace: 'pre-wrap',
+              wordWrap: 'break-word',
+            }}
+          >
+            <span className="underline">Token</span>: {token}
+          </pre>
+          <div className="flex flex-row mt-10">
             <p
               style={{
-                marginTop: 10,
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 padding: 8,
               }}

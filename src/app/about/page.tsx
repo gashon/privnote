@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <main className="w-full flex items-center justify-center">
-      <div className="w-1/2 text-white py-8">
+      <div className="w-11/12 lg:w-1/2 text-white py-8">
         <div className="w-full flex justify-between items-center">
           <div>
             <Link href="/" className="text-xl font-bold">
