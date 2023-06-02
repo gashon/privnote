@@ -15,7 +15,6 @@ type FormValues = {
 
 export function SecretInput() {
   const trpcContext = trpc.useContext();
-  const [secretText, setSecretText] = useState<string>('');
   const [secretURL, setSecretURL] = useState<string | undefined>(undefined);
   const mutation = trpc.secret.create.useMutation({
     onSuccess: () => {
@@ -47,7 +46,6 @@ export function SecretInput() {
   }, []);
 
   const createSecret: SubmitHandler<FormValues> = async (values) => {
-    console.log('values', values);
     const encryptionToken = generateKey();
     const secret = await mutation.mutateAsync({
       token: encryptionToken,
@@ -56,7 +54,7 @@ export function SecretInput() {
         ? new Date(values.expiresAt).getTime()
         : undefined,
     });
-    const encryptedText = encryptPayload(secretText, encryptionToken);
+    const encryptedText = encryptPayload(values.secret, encryptionToken);
     const url = `${
       process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
     }/secret?key=${secret.key}&secret=${encryptedText}`;

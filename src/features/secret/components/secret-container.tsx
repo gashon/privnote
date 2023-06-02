@@ -20,7 +20,7 @@ export function SecretContainer({
 
   return (
     <div className="">
-      {decryptedSecret && token ? (
+      {decryptedSecret ? (
         <>
           <pre
             className="break-all"
