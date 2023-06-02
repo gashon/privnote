@@ -12,18 +12,6 @@ export const findOrCreateAnonymousUser = async (
   if (!uuidCookie) {
     const newUuid = uuidv4();
 
-    // const newUser = await db
-    //   .insertInto('user')
-    //   .values({
-    //     lastUpload: new Date(),
-    //   })
-    //   .returning('id')
-    //   .executeTakeFirst();
-
-    // if (!newUser) {
-    //   throw new Error('Could not create anonymous user');
-    // }
-
     res.setHeader('Set-Cookie', `${UUID_COOKIE_NAME}=${newUuid}; Path=/`);
     return newUuid;
   }

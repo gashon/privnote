@@ -85,7 +85,11 @@ export default function Home() {
             you access to your secrets.
           </p>
 
-          <p>
+          <p
+            style={{
+              marginTop: 25,
+            }}
+          >
             The source code for PrivNote is available on{' '}
             <a
               href="https://github.com/gashon/privnote"
@@ -94,6 +98,19 @@ export default function Home() {
               className="underline"
             >
               GitHub
+            </a>
+            .
+          </p>
+
+          <p>
+            Built by{' '}
+            <a
+              href="https://ghussein.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              gashon
             </a>
             .
           </p>
