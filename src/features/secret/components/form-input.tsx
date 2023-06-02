@@ -1,12 +1,20 @@
 'use client';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import { BsFillClipboardFill } from 'react-icons/bs';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { CiSettings } from 'react-icons/ci';
 import { trpc, successNotification, errorNotification } from '@/lib';
 import { generateKey, encryptPayload } from '@/utils/crypto';
+import { DropDown } from '@/components';
+
+type FormValues = {
+  secret: string;
+  maxViews: number;
+  expiresAt?: number;
+};
 
 export function SecretInput() {
   const trpcContext = trpc.useContext();
-
   const [secretText, setSecretText] = useState<string>('');
   const [secretURL, setSecretURL] = useState<string | undefined>(undefined);
   const mutation = trpc.secret.create.useMutation({
@@ -14,22 +22,42 @@ export function SecretInput() {
       trpcContext.secret.list.invalidate();
     },
   });
-  const encryptionToken = useMemo(() => generateKey(), [mutation.status]);
 
-  const copyToClipboard = async (url: string) => {
-    try {
-      await navigator.clipboard.writeText(url);
-      console.log('URL copied to clipboard:', url);
-      successNotification('URL copied to clipboard');
-    } catch (error) {
-      console.error('Failed to copy URL to clipboard:', error);
-      errorNotification('Failed to copy URL to clipboard');
-    }
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: {
+      secret: '',
+      maxViews: 1,
+    },
+  });
 
-  const createSecret = async () => {
+  const copyToClipboard = useCallback(
+    async (url: string) => {
+      try {
+        await navigator.clipboard.writeText(url);
+        console.log('URL copied to clipboard:', url);
+        successNotification('URL copied to clipboard');
+      } catch (error) {
+        console.error('Failed to copy URL to clipboard:', error);
+        errorNotification('Failed to copy URL to clipboard');
+      }
+    },
+    [navigator],
+  );
+
+  const createSecret: SubmitHandler<FormValues> = async (values) => {
+    console.log('values', values);
+    const encryptionToken = generateKey();
     const secret = await mutation.mutateAsync({
       token: encryptionToken,
+      max_views: parseInt(values.maxViews.toString(), 10),
+      expires_at: values.expiresAt
+        ? new Date(values.expiresAt).getTime()
+        : undefined,
     });
     const encryptedText = encryptPayload(secretText, encryptionToken);
     const url = `${
@@ -42,39 +70,98 @@ export function SecretInput() {
 
   return (
     <>
-      <textarea
-        id="secret"
-        value={secretText}
-        onChange={(e) => setSecretText(e.target.value)}
-        className="w-full rounded block text-sm text-gray-400 hover:resize-y"
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.15)',
-          padding: 10,
-          borderRadius: 5,
-        }}
-        rows={secretText.split('\n').length}
-        placeholder="POSTGRES_USER=..."
-      />
-      <div className="w-full flex justify-between">
-        <button
-          type="submit"
-          onClick={createSecret}
-          className="w-fit"
+      <form onSubmit={handleSubmit(createSecret)}>
+        <textarea
+          id="secret"
+          className="w-full rounded block text-sm text-gray-400 hover:resize-y"
           style={{
-            borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            padding: 10,
+            borderRadius: 5,
+            marginBottom: 5,
+          }}
+          rows={getValues('secret').split('\n').length}
+          placeholder="POSTGRES_USER=..."
+          {...register('secret', {
+            required: true,
+          })}
+        />
+        <div
+          className="w-full"
+          style={{
+            position: 'relative',
           }}
         >
-          Create URL
-        </button>
-        {secretURL && (
-          <div
-            onClick={() => copyToClipboard(secretURL)}
-            className="cursor-pointer"
+          <DropDown
+            PreviewComponent={
+              <div className="flex flex-row items-center">
+                <h4>Advanced Settings</h4>
+              </div>
+            }
+            icon={<CiSettings />}
           >
-            <BsFillClipboardFill />
+            <div className="w-full px-10 opacity-50">
+              <label htmlFor="maxViews" className="block">
+                # views before self-destruct
+              </label>
+              <input
+                id="maxViews"
+                className="w-full rounded block text-sm text-gray-400"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+                type="number"
+                {...register('maxViews', {
+                  required: false,
+                })}
+              />
+              <label htmlFor="expiresAt" className="block">
+                expiration date
+              </label>
+              <input
+                id="expiresAt"
+                className="w-full rounded block text-sm text-gray-400"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+                type="datetime-local"
+                {...register('expiresAt', {
+                  required: false,
+                })}
+              />
+            </div>
+          </DropDown>
+          <div
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+            }}
+          >
+            <button
+              type="submit"
+              className="w-fit"
+              style={{
+                borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
+              }}
+            >
+              Create URL
+            </button>
+            {secretURL && (
+              <div
+                onClick={() => copyToClipboard(secretURL)}
+                className="cursor-pointer"
+              >
+                <BsFillClipboardFill />
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      </form>
     </>
   );
 }
