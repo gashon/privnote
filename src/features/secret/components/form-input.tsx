@@ -35,19 +35,16 @@ export function SecretInput() {
     },
   });
 
-  const copyToClipboard = useCallback(
-    async (url: string) => {
-      try {
-        await navigator.clipboard.writeText(url);
-        console.log('URL copied to clipboard:', url);
-        successNotification('URL copied to clipboard');
-      } catch (error) {
-        console.error('Failed to copy URL to clipboard:', error);
-        errorNotification('Failed to copy URL to clipboard');
-      }
-    },
-    [navigator],
-  );
+  const copyToClipboard = useCallback(async (url: string) => {
+    try {
+      await navigator.clipboard.writeText(url);
+      console.log('URL copied to clipboard:', url);
+      successNotification('URL copied to clipboard');
+    } catch (error) {
+      console.error('Failed to copy URL to clipboard:', error);
+      errorNotification('Failed to copy URL to clipboard');
+    }
+  }, []);
 
   const createSecret: SubmitHandler<FormValues> = async (values) => {
     console.log('values', values);
