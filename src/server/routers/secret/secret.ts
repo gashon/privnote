@@ -28,7 +28,7 @@ export const secretRouter = router({
       if (!secret) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Secret not found',
+          message: 'Secret not found or deleted',
         });
       }
 
@@ -102,7 +102,7 @@ export const secretRouter = router({
       if (!secret || secret.deletedAt !== null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Secret not found',
+          message: 'Secret not found or deleted',
         });
       }
 
@@ -143,7 +143,7 @@ export const secretRouter = router({
         if (secret.views + 1 !== secret.maxViews)
           throw new TRPCError({
             code: 'NOT_FOUND',
-            message: 'Secret not found',
+          message: 'Secret not found or deleted',
           });
       }
 
@@ -184,7 +184,7 @@ export const secretRouter = router({
       if (!secret || secret.deletedAt !== null) {
         throw new TRPCError({
           code: 'NOT_FOUND',
-          message: 'Secret not found',
+          message: 'Secret not found or deleted',
         });
       }
 
