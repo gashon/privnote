@@ -11,7 +11,7 @@ type Storage = {
   get<T>(key: string): T | null;
   set<T>(key: string, value: T, expires_at?: Date): void;
   remove(key: string): void;
-  exists(key: string): boolean;
+  exists(key: string): boolean | null;
   getMeta(key: string): Omit<StorageDocument<any>, 'data'> | null;
   getKey(key: string): string;
   isMounted(): boolean;
@@ -20,7 +20,7 @@ type Storage = {
 
 const storage: Storage = {
   get<T>(key: string): T | null {
-    if (!this.isMounted()) throw new Error('Storage is not available');
+    if (!this.isMounted()) return null;
 
     const item = localStorage.getItem(this.getKey(key));
     const doc: StorageDocument<T> = item ? JSON.parse(item) : null;
@@ -33,7 +33,7 @@ const storage: Storage = {
     return doc ? doc.data : null;
   },
   set<T>(key: string, value: T, expires_at?: Date): void {
-    if (!this.isMounted()) throw new Error('Storage is not available');
+    if (!this.isMounted()) return;
 
     const prev = this.getMeta(key);
 
@@ -47,12 +47,12 @@ const storage: Storage = {
     localStorage.setItem(this.getKey(key), JSON.stringify(doc));
   },
   remove(key: string): void {
-    if (!this.isMounted()) throw new Error('Storage is not available');
+    if (!this.isMounted()) return;
 
     localStorage.removeItem(this.getKey(key));
   },
-  exists(key: string): boolean {
-    if (!this.isMounted()) throw new Error('Storage is not available');
+  exists(key: string): boolean | null {
+    if (!this.isMounted()) return null;
 
     return !!localStorage.getItem(this.getKey(key));
   },

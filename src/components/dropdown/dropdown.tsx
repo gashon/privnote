@@ -17,7 +17,6 @@ export const DropDown: FC<DropDownProps> = ({
   storageLabel,
   disabled = false,
 }) => {
-  console.log('GOT', storageLabel);
   const [isOpen, setIsOpen] = useState<boolean>(
     storageLabel ? !!storage.get(`dropdown:${storageLabel}`) : false,
   );
