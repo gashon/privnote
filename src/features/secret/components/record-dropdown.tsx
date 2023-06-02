@@ -52,8 +52,12 @@ function DropDownLog({
   ipAddress,
   userAgent,
   id,
+  geo,
   createdAt,
-}: Pick<Selectable<ViewLog>, 'ipAddress' | 'id' | 'createdAt' | 'userAgent'>) {
+}: Pick<
+  Selectable<ViewLog>,
+  'ipAddress' | 'id' | 'createdAt' | 'userAgent' | 'geo'
+>) {
   return (
     <div key={id} className="flex flex-row gap-4 w-full my-2">
       <p className="w-1/4 border-r-2 border-white opacity-50">
@@ -61,6 +65,11 @@ function DropDownLog({
       </p>
 
       <div className="w-3/4">
+        {geo && (
+          <p className="underline">
+            {geo?.city}, {geo?.region}, {geo?.country}
+          </p>
+        )}
         <p className="w-full">
           IP: <strong>{ipAddress}</strong>
         </p>
