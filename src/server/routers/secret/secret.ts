@@ -106,21 +106,6 @@ export const secretRouter = router({
         });
       }
 
-      if (secret.maxViews !== -1 && secret.views == secret.maxViews) {
-        await ctx.db
-          .updateTable('secret')
-          .set({
-            deletedAt: new Date(),
-          })
-          .where('key', '=', input.key)
-          .execute();
-
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Secret not found',
-        });
-      }
-
       // update views
       await ctx.db.transaction().execute(async (trx) => {
         await Promise.all([
@@ -146,6 +131,21 @@ export const secretRouter = router({
         ]);
       });
 
+      if (secret.maxViews !== -1 && secret.views + 1 == secret.maxViews) {
+        await ctx.db
+          .updateTable('secret')
+          .set({
+            deletedAt: new Date(),
+          })
+          .where('key', '=', input.key)
+          .execute();
+
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'Secret not found',
+        });
+      }
+
       return {
         token: secret.token,
       };
@@ -161,6 +161,12 @@ export const secretRouter = router({
       }),
     )
     .mutation(async ({ input, ctx }) => {
+      if (input.max_views && input.max_views < 1)
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'max_views must be greater than 0',
+        });
+
       const secret = await ctx.db
         .selectFrom('secret')
         .select([

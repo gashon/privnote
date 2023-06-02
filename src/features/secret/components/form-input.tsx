@@ -9,7 +9,7 @@ import { DropDown } from '@/components';
 
 type FormValues = {
   secret: string;
-  maxViews: number;
+  maxViews?: number;
   expiresAt?: number;
 };
 
@@ -49,7 +49,9 @@ export function SecretInput() {
     const encryptionToken = generateKey();
     const secret = await mutation.mutateAsync({
       token: encryptionToken,
-      max_views: parseInt(values.maxViews.toString(), 10),
+      max_views: values.maxViews
+        ? parseInt(values.maxViews.toString(), 10)
+        : undefined,
       expires_at: values.expiresAt
         ? new Date(values.expiresAt).getTime()
         : undefined,
