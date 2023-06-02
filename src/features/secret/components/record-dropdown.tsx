@@ -119,6 +119,10 @@ export function RecordDropDown() {
                       paddingRight: 10,
                     }}
                   >
+                    {secret.logs?.length === 0 && (
+                      <p className="opacity-50">No logs found.</p>
+                    )}
+
                     {secret.logs?.map((log: any) => (
                       <DropDownLog {...log} />
                     ))}
@@ -135,7 +139,13 @@ export function RecordDropDown() {
                       paddingRight: 10,
                     }}
                   >
-                    <EditSecretForm secret={secret} />
+                    {secret?.deletedAt ? (
+                      <p className="opacity-50 underline">
+                        This secret has been deleted and cannot be edited.
+                      </p>
+                    ) : (
+                      <EditSecretForm secret={secret} />
+                    )}
                   </div>
                 </DropDown>
               </div>

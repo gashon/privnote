@@ -141,6 +141,7 @@ export function SecretInput() {
               right: 0,
               top: 0,
             }}
+            className="flex flex-row justify-center items-center gap-4"
           >
             <button
               type="submit"
