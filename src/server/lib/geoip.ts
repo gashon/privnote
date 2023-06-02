@@ -1,4 +1,4 @@
-import geoip from 'geoip-lite';
-export type { Lookup as GeoIpLookup } from 'geoip-lite';
+import geoip from 'fast-geoip';
 
+export type GeoIpLookup = Awaited<ReturnType<typeof geoip.lookup>>;
 export { geoip };

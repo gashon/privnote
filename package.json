@@ -31,7 +31,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
-    "geoip-lite": "^1.4.7",
+    "fast-geoip": "^1.1.88",
     "next": "13.4.3",
     "postcss": "8.4.23",
     "prettier": "^2.8.8",
@@ -47,7 +47,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/geoip-lite": "^1.4.1",
     "@types/node": "20.2.3",
     "@types/pg": "^8.10.1",
     "@types/react": "18.2.6",
