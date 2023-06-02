@@ -4,11 +4,13 @@ import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 type DropDownProps = {
   PreviewComponent: ReactNode;
   children: ReactNode;
+  icon?: ReactNode;
   disabled?: boolean;
 };
 export const DropDown: FC<DropDownProps> = ({
   PreviewComponent,
   children,
+  icon,
   disabled = false,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,7 +26,7 @@ export const DropDown: FC<DropDownProps> = ({
         {isOpen ? (
           <AiOutlineArrowUp className="inline-block opacity-50" />
         ) : (
-          <AiOutlineArrowDown className="inline-block" />
+          <>{icon ?? <AiOutlineArrowDown className="inline-block" />}</>
         )}
         {PreviewComponent}
       </div>
