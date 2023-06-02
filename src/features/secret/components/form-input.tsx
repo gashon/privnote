@@ -99,6 +99,7 @@ export function SecretInput() {
               </div>
             }
             icon={<CiSettings />}
+            storageLabel="advanced-settings"
           >
             <div className="w-full px-10 opacity-50">
               <label htmlFor="maxViews" className="block">
