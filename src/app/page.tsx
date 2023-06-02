@@ -12,7 +12,7 @@ export default function Home() {
         <div className="w-full flex justify-between items-center">
           <div>
             <Link href="/" className="text-xl font-bold">
-              send secrets securely
+              notes that self-destruct
             </Link>
           </div>
           <Link href="/about" className="text-xl">
