@@ -38,8 +38,13 @@ export function EditSecretForm({ secret }: any) {
         marginBottom: '3rem',
       }}
     >
-      <form className="w-full">
-        <div className="w-full flex justify-between">
+      <form
+        className="w-full"
+        style={{
+          marginTop: '1rem',
+        }}
+      >
+        <div className="w-full flex flex-col">
           <div className="flex flex-col">
             <label
               htmlFor="expires_at"

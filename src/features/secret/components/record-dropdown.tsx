@@ -97,62 +97,68 @@ export function RecordDropDown() {
             <h4 className="opacity-50">No records found.</h4>
           )}
           {secrets.data?.map((secret: any) => (
-            <DropDown
-              disabled={!!secret.deletedAt}
-              PreviewComponent={<DropDownRecord secret={secret} />}
-              storageLabel={`record:${secret.key}`}
+            <div
+              style={{
+                margin: '10px 0 10px 0',
+              }}
             >
-              <div
-                style={{
-                  marginTop: 0,
-                  marginBottom: 10,
-                  marginLeft: 10,
-                }}
+              <DropDown
+                disabled={!!secret.deletedAt}
+                PreviewComponent={<DropDownRecord secret={secret} />}
+                storageLabel={`record:${secret.key}`}
               >
-                <DropDown
-                  disabled={!!secret.deletedAt}
-                  PreviewComponent={<h5>View logs</h5>}
-                  storageLabel={`record:${secret.key}:logs`}
+                <div
+                  style={{
+                    marginTop: 10,
+                    marginBottom: 10,
+                    marginLeft: 10,
+                  }}
                 >
-                  <div
-                    style={{
-                      borderRight: '1px solid rgba(255, 255, 255, 0.5)',
-                      paddingLeft: 20,
-                      paddingRight: 10,
-                    }}
+                  <DropDown
+                    disabled={!!secret.deletedAt}
+                    PreviewComponent={<h5>View logs</h5>}
+                    storageLabel={`record:${secret.key}:logs`}
                   >
-                    {secret.logs?.length === 0 && (
-                      <p className="opacity-50">No logs found.</p>
-                    )}
+                    <div
+                      style={{
+                        borderRight: '1px solid rgba(255, 255, 255, 0.5)',
+                        paddingLeft: 20,
+                        paddingRight: 10,
+                      }}
+                    >
+                      {secret.logs?.length === 0 && (
+                        <p className="opacity-50">No logs found.</p>
+                      )}
 
-                    {secret.logs?.map((log: any) => (
-                      <DropDownLog {...log} />
-                    ))}
-                  </div>
-                </DropDown>
-                <DropDown
-                  disabled={!!secret.deletedAt}
-                  PreviewComponent={<h5>Edit settings</h5>}
-                  storageLabel={`record:${secret.key}:settings`}
-                >
-                  <div
-                    style={{
-                      borderRight: '1px solid rgba(255, 255, 255, 0.5)',
-                      paddingLeft: 20,
-                      paddingRight: 10,
-                    }}
+                      {secret.logs?.map((log: any) => (
+                        <DropDownLog {...log} />
+                      ))}
+                    </div>
+                  </DropDown>
+                  <DropDown
+                    disabled={!!secret.deletedAt}
+                    PreviewComponent={<h5>Edit settings</h5>}
+                    storageLabel={`record:${secret.key}:settings`}
                   >
-                    {secret?.deletedAt ? (
-                      <p className="opacity-50 underline">
-                        This secret has been deleted and cannot be edited.
-                      </p>
-                    ) : (
-                      <EditSecretForm secret={secret} />
-                    )}
-                  </div>
-                </DropDown>
-              </div>
-            </DropDown>
+                    <div
+                      style={{
+                        borderRight: '1px solid rgba(255, 255, 255, 0.5)',
+                        paddingLeft: 20,
+                        paddingRight: 10,
+                      }}
+                    >
+                      {secret?.deletedAt ? (
+                        <p className="opacity-50 underline">
+                          This secret has been deleted and cannot be edited.
+                        </p>
+                      ) : (
+                        <EditSecretForm secret={secret} />
+                      )}
+                    </div>
+                  </DropDown>
+                </div>
+              </DropDown>
+            </div>
           ))}
         </div>
       )}
