@@ -109,6 +109,7 @@ export function SecretInput() {
                   borderRadius: 5,
                 }}
                 type="number"
+                placeholder="∞"
                 {...register('maxViews', {
                   required: false,
                 })}
