@@ -10,6 +10,8 @@ type FormInput = {
 };
 
 export function EditSecretForm({ secret }: any) {
+  const trpcContext = trpc.useContext();
+
   const updateMutation = trpc.secret.update.useMutation({
     onSuccess: () => {
       successNotification('Record updated');
@@ -19,7 +21,7 @@ export function EditSecretForm({ secret }: any) {
     onSuccess: () => {
       successNotification('Record deleted');
 
-      // trpc.invalidateQuery(['secret.list']);
+      trpcContext.secret.list.invalidate();
     },
   });
   const [formInput, setFormInput] = useState<FormInput>({

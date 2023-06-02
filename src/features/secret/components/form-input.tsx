@@ -5,11 +5,13 @@ import { trpc, successNotification, errorNotification } from '@/lib';
 import { generateKey, encryptPayload } from '@/utils/crypto';
 
 export function SecretInput() {
+  const trpcContext = trpc.useContext();
+
   const [secretText, setSecretText] = useState<string>('');
   const [secretURL, setSecretURL] = useState<string | undefined>(undefined);
   const mutation = trpc.secret.create.useMutation({
     onSuccess: () => {
-      // trpc.invalidateQuery(['secret.list']);
+      trpcContext.secret.list.invalidate();
     },
   });
   const encryptionToken = useMemo(() => generateKey(), [mutation.status]);
