@@ -131,7 +131,7 @@ export const secretRouter = router({
         ]);
       });
 
-      if (secret.maxViews !== -1 && secret.views + 1 == secret.maxViews) {
+      if (secret.maxViews !== -1 && secret.views + 1 >= secret.maxViews) {
         await ctx.db
           .updateTable('secret')
           .set({
@@ -140,10 +140,11 @@ export const secretRouter = router({
           .where('key', '=', input.key)
           .execute();
 
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Secret not found',
-        });
+        if (secret.views + 1 !== secret.maxViews)
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Secret not found',
+          });
       }
 
       return {
