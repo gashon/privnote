@@ -2,12 +2,12 @@
  *
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
-import { router, publicProcedure } from '@/server/lib';
-import { TRPCError } from '@trpc/server';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
-import { Secret } from '@/server/db/types';
 import { Updateable } from 'kysely';
+import { Secret, Json } from '@/server/db/types';
+import { TRPCError } from '@trpc/server';
+import { router, publicProcedure, geoip } from '@/server/lib';
 
 export const secretRouter = router({
   delete: publicProcedure
@@ -76,6 +76,7 @@ export const secretRouter = router({
           'viewLog.ipAddress',
           'viewLog.userAgent',
           'viewLog.createdAt',
+          'viewLog.geo',
         ])
         .execute(),
     ]);
@@ -108,6 +109,8 @@ export const secretRouter = router({
 
       // update views
       await ctx.db.transaction().execute(async (trx) => {
+        const geo = await geoip.lookup(ctx.ipAddress);
+
         await Promise.all([
           // increment running count
           ctx.db
@@ -126,6 +129,7 @@ export const secretRouter = router({
               secretId: secret.id,
               ipAddress: ctx.ipAddress,
               userAgent: ctx.userAgent,
+              geo: geo as any, // jsonb datatype
             })
             .execute(),
         ]);
@@ -143,7 +147,7 @@ export const secretRouter = router({
         if (secret.views + 1 !== secret.maxViews)
           throw new TRPCError({
             code: 'NOT_FOUND',
-          message: 'Secret not found or deleted',
+            message: 'Secret not found or deleted',
           });
       }
 

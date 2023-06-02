@@ -14,7 +14,7 @@
     "db:reset": "docker exec -it privnote-db psql -U postgres -c 'DROP DATABASE IF EXISTS priv_note_db'",
     "db:migrate": "node -r esbuild-runner/register  src/server/db/migrations/scripts/to-latest.ts && pnpm db:types:generate",
     "db:migrate:undo:all": "node -r esbuild-runner/register  src/server/db/migrations/scripts/drop-all.ts && pnpm db:types:generate",
-    "db:types:generate": "kysely-codegen --dialect postgres --camel-case --out-file src/server/db/types.d.ts",
+    "db:types:generate": "kysely-codegen --dialect postgres --camel-case --out-file src/server/db/types/generated.types.ts",
     "lhci:mobile": "lhci autorun",
     "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
   },
@@ -31,6 +31,7 @@
     "dotenv": "^16.0.3",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
+    "geoip-lite": "^1.4.7",
     "next": "13.4.3",
     "postcss": "8.4.23",
     "prettier": "^2.8.8",
@@ -46,6 +47,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/geoip-lite": "^1.4.1",
     "@types/node": "20.2.3",
     "@types/pg": "^8.10.1",
     "@types/react": "18.2.6",
