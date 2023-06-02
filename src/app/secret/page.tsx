@@ -5,19 +5,22 @@ import { useSearchParams } from 'next/navigation';
 import { errorNotification } from '@/lib';
 import Link from 'next/link';
 
+type SearchParamType = string | undefined;
+
 export default function SecretPage() {
   const searchParams = useSearchParams();
-  const key = searchParams?.get('key');
-  const secret = searchParams?.get('secret');
-  if (!key || !secret) return <div>Invalid secret</div>;
+  const key = searchParams?.get('key') as SearchParamType;
+  const secret = searchParams?.get('secret') as SearchParamType;
+  if (!key || !secret) return <p className="text-white">Invalid secret</p>;
 
   const { data, error } = trpc.secret.get.useQuery(
     {
       key: key!,
     },
     {
-      enabled: !!key,
+      enabled: !!key && !!secret,
       retry: false,
+      refetchOnWindowFocus: false,
     },
   );
 
