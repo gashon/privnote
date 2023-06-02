@@ -83,7 +83,7 @@ export function RecordDropDown() {
     );
 
   return (
-    <DropDown PreviewComponent={<h4>Records</h4>}>
+    <DropDown PreviewComponent={<h4>Records</h4>} storageLabel="records">
       {!secrets.isFetched ? (
         <p className="opacity-50">Loading...</p>
       ) : (
@@ -100,6 +100,7 @@ export function RecordDropDown() {
             <DropDown
               disabled={!!secret.deletedAt}
               PreviewComponent={<DropDownRecord secret={secret} />}
+              storageLabel={`record:${secret.key}`}
             >
               <div
                 style={{
@@ -111,6 +112,7 @@ export function RecordDropDown() {
                 <DropDown
                   disabled={!!secret.deletedAt}
                   PreviewComponent={<h5>View logs</h5>}
+                  storageLabel={`record:${secret.key}:logs`}
                 >
                   <div
                     style={{
@@ -131,6 +133,7 @@ export function RecordDropDown() {
                 <DropDown
                   disabled={!!secret.deletedAt}
                   PreviewComponent={<h5>Edit settings</h5>}
+                  storageLabel={`record:${secret.key}:settings`}
                 >
                   <div
                     style={{
