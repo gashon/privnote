@@ -172,6 +172,12 @@ export const secretRouter = router({
           message: 'max_views must be greater than 0',
         });
 
+      if (input.expires_at && new Date(input.expires_at) < new Date())
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'expires_at must be in the future',
+        });
+
       const secret = await ctx.db
         .selectFrom('secret')
         .select([

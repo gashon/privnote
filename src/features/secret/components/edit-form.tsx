@@ -1,6 +1,7 @@
 'use client';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { trpc, successNotification } from '@/lib';
+import { errorNotification } from '@/lib';
 
 type FormInput = {
   key: string;
@@ -17,12 +18,18 @@ export function EditSecretForm({ secret }: any) {
       successNotification('Record updated');
       trpcContext.secret.list.invalidate();
     },
+    onError: (error) => {
+      errorNotification(error.message);
+    },
   });
   const deleteMutation = trpc.secret.delete.useMutation({
     onSuccess: () => {
       successNotification('Record deleted');
 
       trpcContext.secret.list.invalidate();
+    },
+    onError: (error) => {
+      errorNotification(error.message);
     },
   });
 
