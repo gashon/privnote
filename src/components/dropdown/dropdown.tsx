@@ -1,7 +1,7 @@
 'use client';
 import { useState, FC, ReactNode } from 'react';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
-import storage from '@/lib/storage';
+import { dropDownStorageHandler } from '@/lib/storage';
 
 type DropDownProps = {
   PreviewComponent: ReactNode;
@@ -10,6 +10,7 @@ type DropDownProps = {
   disabled?: boolean;
   storageLabel?: string;
 };
+
 export const DropDown: FC<DropDownProps> = ({
   PreviewComponent,
   children,
@@ -18,7 +19,7 @@ export const DropDown: FC<DropDownProps> = ({
   disabled = false,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(
-    storageLabel ? !!storage.get(`dropdown:${storageLabel}`) : false,
+    dropDownStorageHandler.isOpen(storageLabel),
   );
 
   return (
@@ -26,7 +27,12 @@ export const DropDown: FC<DropDownProps> = ({
       <div
         onClick={() => {
           setIsOpen(!isOpen);
-          if (storageLabel) storage.set(`dropdown:${storageLabel}`, !isOpen);
+
+          if (isOpen) {
+            dropDownStorageHandler.remove(storageLabel);
+            return;
+          }
+          dropDownStorageHandler.add(storageLabel);
         }}
         className={`cursor-pointer flex flex-row items-center gap-2 ${
           disabled ? 'opacity-25' : ''

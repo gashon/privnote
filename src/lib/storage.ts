@@ -81,4 +81,64 @@ const storage: Storage = {
   },
 };
 
+export const dropDownStorageHandler = {
+  key: 'dropdown:state',
+  get: () => {
+    const dropDownState = storage.get<string[]>(dropDownStorageHandler.key);
+    return dropDownState;
+  },
+  add: (dropDownId: string | undefined) => {
+    if (!dropDownId) return;
+
+    const dropDownState = dropDownStorageHandler.get();
+    if (dropDownState)
+      storage.set(dropDownStorageHandler.key, [...dropDownState, dropDownId]);
+    else storage.set(dropDownStorageHandler.key, [dropDownId]);
+
+    dropDownStorageHandler.INTERNAL_validateFormat();
+  },
+  remove: (dropDownId: string | undefined) => {
+    if (!dropDownId) return;
+
+    const dropDownState = dropDownStorageHandler.get();
+    if (!dropDownState) return;
+
+    const newDropDownState = dropDownState.filter(
+      (dropDown) => dropDown !== dropDownId,
+    );
+    storage.set(dropDownStorageHandler.key, newDropDownState);
+
+    dropDownStorageHandler.INTERNAL_validateFormat();
+    return;
+  },
+  isOpen: (dropDownId: string | undefined) => {
+    if (!dropDownId) return false;
+
+    const dropDownState = dropDownStorageHandler.get();
+    if (dropDownState) {
+      return dropDownState.includes(dropDownId);
+    }
+    return false;
+  },
+  clear: () => {
+    storage.remove(dropDownStorageHandler.key);
+  },
+  INTERNAL_validateFormat: () => {
+    const dropDownState = storage.get(dropDownStorageHandler.key);
+    if (!dropDownState) return;
+
+    // verify is array and contains strings
+    if (
+      !Array.isArray(dropDownState) ||
+      !dropDownState.every((x) => typeof x === 'string')
+    ) {
+      console.error(
+        "Invalid format for dropdown storage. Expected type 'Array<string>'",
+      );
+      dropDownStorageHandler.clear();
+      return;
+    }
+  },
+};
+
 export default storage;

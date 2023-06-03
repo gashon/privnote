@@ -2,7 +2,6 @@
 import { trpc } from '@/lib';
 import { SecretContainer } from '@/features/secret/components/secret-container';
 import { useSearchParams } from 'next/navigation';
-import { errorNotification } from '@/lib';
 
 type SearchParamType = string | undefined;
 
@@ -23,9 +22,6 @@ export default function SecretPage() {
     },
   );
 
-  if (error) {
-    errorNotification(error.message);
-  }
   return (
     <>
       {data?.token ? (
