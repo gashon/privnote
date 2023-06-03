@@ -22,12 +22,14 @@ export function SecretInput() {
     },
   });
 
-  const { register, handleSubmit, formState, getValues } = useForm<FormValues>({
-    defaultValues: {
-      secret: '',
-      maxViews: 1,
-    },
-  });
+  const { register, handleSubmit, formState, getValues, watch } =
+    useForm<FormValues>({
+      defaultValues: {
+        secret: '',
+        maxViews: 1,
+      },
+    });
+  watch('secret'); // to update the number of rows
 
   const copyToClipboard = useCallback(async (url: string) => {
     try {
