@@ -18,7 +18,6 @@ export function SecretContainer({
     return decryptPayload(encryptedText, token);
   }, [encryptedText, token]);
 
-  console.log('GOT', decryptedSecret);
   return (
     <div className="">
       {decryptedSecret ? (

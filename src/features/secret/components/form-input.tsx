@@ -37,7 +37,6 @@ export function SecretInput() {
   const copyToClipboard = useCallback(async (url: string) => {
     try {
       await navigator.clipboard.writeText(url);
-      console.log('URL copied to clipboard:', url);
       successNotification('URL copied to clipboard');
     } catch (error) {
       console.error('Failed to copy URL to clipboard:', error);
