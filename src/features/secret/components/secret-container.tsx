@@ -30,7 +30,12 @@ export function SecretContainer({
         >
           <span className="underline">Token</span>: {token}
         </pre>
-        <div className="flex flex-row mt-10">
+        <div
+          className="flex flex-row"
+          style={{
+            marginTop: 8,
+          }}
+        >
           <p
             style={{
               backgroundColor: 'rgba(255, 255, 255, 0.15)',

@@ -22,12 +22,7 @@ export function SecretInput() {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<FormValues>({
+  const { register, handleSubmit, formState, getValues } = useForm<FormValues>({
     defaultValues: {
       secret: '',
       maxViews: 1,
@@ -148,7 +143,7 @@ export function SecretInput() {
                 borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
               }}
             >
-              Create URL
+              {formState.isSubmitting ? 'Loading...' : ' Create URL'}
             </button>
             {secretURL && (
               <div
