@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { trpc, successNotification } from '@/lib';
 
 type FormInput = {
@@ -15,6 +15,7 @@ export function EditSecretForm({ secret }: any) {
   const updateMutation = trpc.secret.update.useMutation({
     onSuccess: () => {
       successNotification('Record updated');
+      trpcContext.secret.list.invalidate();
     },
   });
   const deleteMutation = trpc.secret.delete.useMutation({
@@ -24,12 +25,17 @@ export function EditSecretForm({ secret }: any) {
       trpcContext.secret.list.invalidate();
     },
   });
-  const [formInput, setFormInput] = useState<FormInput>({
-    key: secret.key,
-    token: secret.token,
-    maxViews: secret.maxViews,
-    expiresAt: secret.expiresAt ?? undefined,
-  });
+
+  const { register, handleSubmit, formState, getValues, watch } =
+    useForm<FormInput>({
+      defaultValues: {
+        key: secret.key,
+        token: secret.token,
+        maxViews: secret.maxViews,
+        expiresAt: secret.expiresAt ?? undefined,
+      },
+    });
+  watch('maxViews');
 
   return (
     <div
@@ -43,6 +49,17 @@ export function EditSecretForm({ secret }: any) {
         style={{
           marginTop: '1rem',
         }}
+        onSubmit={handleSubmit((data) => {
+          updateMutation.mutateAsync({
+            key: secret.key,
+            max_views: data.maxViews
+              ? parseInt(data.maxViews?.toString())
+              : undefined,
+            expires_at: data.expiresAt
+              ? new Date(data.expiresAt).getTime()
+              : undefined,
+          });
+        })}
       >
         <div className="w-full flex flex-col">
           <div className="flex flex-col">
@@ -59,15 +76,15 @@ export function EditSecretForm({ secret }: any) {
                 secret.expiresAt &&
                 new Date(secret.expiresAt).toISOString().substr(0, 10)
               }
-              onChange={(e) =>
-                setFormInput({ ...formInput, expiresAt: e.target.value })
-              }
               className="text-gray-400 p-2 rounded"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 padding: 5,
                 borderRadius: 2.5,
               }}
+              {...register('expiresAt', {
+                required: false,
+              })}
             />
           </div>
 
@@ -81,20 +98,19 @@ export function EditSecretForm({ secret }: any) {
             <input
               id="max_views"
               type="number"
-              value={formInput.maxViews !== -1 ? formInput.maxViews : undefined}
-              placeholder={'Views before expiration'}
-              onChange={(e) =>
-                setFormInput({
-                  ...formInput,
-                  maxViews: parseInt(e.target.value),
-                })
+              value={
+                getValues('maxViews') !== -1 ? getValues('maxViews') : undefined
               }
+              placeholder={'Views before expiration'}
               className="text-gray-400 p-2 rounded"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 padding: 5,
                 borderRadius: 2.5,
               }}
+              {...register('maxViews', {
+                required: false,
+              })}
             />
           </div>
         </div>
@@ -120,16 +136,7 @@ export function EditSecretForm({ secret }: any) {
           />
 
           <input
-            onClick={() => {
-              updateMutation.mutateAsync({
-                key: secret.key,
-                max_views: formInput.maxViews,
-                expires_at: formInput.expiresAt
-                  ? new Date(formInput.expiresAt).getTime()
-                  : undefined,
-              });
-            }}
-            type="button"
+            type="submit"
             value="Update"
             className=" text-white font-bold cursor-pointer"
             style={{

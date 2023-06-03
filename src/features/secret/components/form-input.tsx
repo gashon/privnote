@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { BsFillClipboardFill } from 'react-icons/bs';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { CiSettings } from 'react-icons/ci';
