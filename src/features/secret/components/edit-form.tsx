@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { trpc, successNotification } from '@/lib';
 import { errorNotification } from '@/lib';
+import { get } from 'http';
 
 type FormInput = {
   key: string;
@@ -39,11 +40,20 @@ export function EditSecretForm({ secret }: any) {
         key: secret.key,
         token: secret.token,
         maxViews: secret.maxViews,
-        expiresAt: secret.expiresAt ?? undefined,
+        expiresAt: secret?.expiresAt
+          ? new Date(secret.expiresAt).toISOString().split('T')[0]
+          : undefined,
       },
     });
   watch('maxViews');
+  watch('expiresAt');
 
+  console.log(
+    'ogt',
+    secret.expiresAt,
+    getValues('expiresAt'),
+    getValues('expiresAt') ?? secret.expiresAt,
+  );
   return (
     <div
       className="w-full flex justify-end"
@@ -79,10 +89,6 @@ export function EditSecretForm({ secret }: any) {
             <input
               id="expires_at"
               type="date"
-              value={
-                secret.expiresAt &&
-                new Date(secret.expiresAt).toISOString().substr(0, 10)
-              }
               className="text-gray-400 p-2 rounded"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
