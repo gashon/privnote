@@ -47,14 +47,16 @@ export default function SecretPage() {
           </h1>
         </div>
 
-        {data?.token && (
-          <>
+        <>
+          {data?.token ? (
             <SecretContainer
               encryptedText={secret as string}
               token={data.token}
             />
-          </>
-        )}
+          ) : (
+            <p className="text-white">{error ? error.message : 'Loading...'}</p>
+          )}
+        </>
       </div>
     </main>
   );
