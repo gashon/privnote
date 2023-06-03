@@ -48,12 +48,6 @@ export function EditSecretForm({ secret }: any) {
   watch('maxViews');
   watch('expiresAt');
 
-  console.log(
-    'ogt',
-    secret.expiresAt,
-    getValues('expiresAt'),
-    getValues('expiresAt') ?? secret.expiresAt,
-  );
   return (
     <div
       className="w-full flex justify-end"
@@ -78,7 +72,7 @@ export function EditSecretForm({ secret }: any) {
           });
         })}
       >
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col gap-2">
           <div className="flex flex-col">
             <label
               htmlFor="expires_at"

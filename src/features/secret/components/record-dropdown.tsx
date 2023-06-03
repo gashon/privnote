@@ -18,7 +18,7 @@ function DropDownRecord({ secret }: any) {
         className="break-words opacity-50"
         style={{
           width: '25%',
-          borderRight: '1px solid white',
+          borderRight: '2px solid white',
         }}
       >
         {secret.createdAt}
@@ -67,7 +67,8 @@ function DropDownLog({
       <div className="w-3/4">
         {geo && (
           <p className="underline">
-            {geo?.city}, {geo?.region}, {geo?.country}start          </p>
+            {geo?.city}, {geo?.region}, {geo?.country}start{' '}
+          </p>
         )}
         <p className="w-full">
           IP: <strong>{ipAddress}</strong>
@@ -129,7 +130,7 @@ export function RecordDropDown() {
                   >
                     <div
                       style={{
-                        borderRight: '1px solid rgba(255, 255, 255, 0.5)',
+                        borderRight: '2px solid rgba(255, 255, 255, 0.5)',
                         paddingLeft: 20,
                         paddingRight: 10,
                       }}
@@ -150,7 +151,7 @@ export function RecordDropDown() {
                   >
                     <div
                       style={{
-                        borderRight: '1px solid rgba(255, 255, 255, 0.5)',
+                        borderRight: '2px solid rgba(255, 255, 255, 0.5)',
                         paddingLeft: 20,
                         paddingRight: 10,
                       }}
