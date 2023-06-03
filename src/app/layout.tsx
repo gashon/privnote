@@ -2,7 +2,6 @@
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import Link from 'next/link';
-import Head from 'next/head';
 
 import { trpc } from '@/lib';
 
@@ -15,7 +14,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <html lang="en" className={inter.className}>
-        <Head>
+        <head>
           <title>PrivNote v.2</title>
           <meta
             name="viewport"
@@ -26,7 +25,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
             content="Send encrypted messages that self-destruct after being read."
           />
           <link rel="icon" href="/favicon.ico" />
-        </Head>
+        </head>
 
         <body className="bg-neutral-900 min-w-screen min-h-screen">
           <ToastContainer />
