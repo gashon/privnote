@@ -1,6 +1,8 @@
 'use client';
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
+import Link from 'next/link';
+
 import { trpc } from '@/lib';
 
 import './globals.css';
@@ -15,7 +17,27 @@ function RootLayout({ children }: { children: React.ReactNode }) {
         <body className="bg-neutral-900 min-w-screen min-h-screen">
           <ToastContainer />
 
-          {children}
+          <main className="w-full flex items-center justify-center">
+            <div className="w-11/12 lg:w-1/2 text-white py-8">
+              <div className="w-full flex justify-between items-center">
+                <div>
+                  <Link href="/" className="text-xl font-bold">
+                    send secrets securely
+                  </Link>
+                </div>
+                <Link href="/about" className="text-xl">
+                  how it works
+                </Link>
+              </div>
+
+              <div className="w-full flex flex-col mt-10 mb-4 gap-2">
+                <h1 className="block mb-4 text-3xl font-medium text-gray-900 dark:text-white">
+                  PrivNote v.2
+                </h1>
+              </div>
+              {children}
+            </div>
+          </main>
         </body>
       </html>
     </>
