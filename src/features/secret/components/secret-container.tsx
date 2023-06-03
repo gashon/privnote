@@ -18,6 +18,7 @@ export function SecretContainer({
     return decryptPayload(encryptedText, token);
   }, [encryptedText, token]);
 
+  console.log('GOT', decryptedSecret);
   return (
     <div className="">
       {decryptedSecret ? (
@@ -37,6 +38,8 @@ export function SecretContainer({
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
                 padding: 8,
+                whiteSpace: 'pre-line',
+                wordWrap: 'break-word',
               }}
               className="w-full text-lg"
             >
