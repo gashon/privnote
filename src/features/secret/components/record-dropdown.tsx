@@ -66,8 +66,11 @@ function DropDownLog({
 
       <div className="w-3/4">
         {geo && (
-          <p className="underline">
-            geoIP: {geo?.city} {geo?.region} {geo?.country}
+          <p>
+            Geo:{' '}
+            <span className="underline">
+              {geo?.city} {geo?.region} {geo?.country}
+            </span>
           </p>
         )}
         <p className="w-full">
