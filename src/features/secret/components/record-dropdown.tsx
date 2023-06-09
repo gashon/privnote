@@ -66,7 +66,7 @@ function DropDownLog({
 
       <div className="w-3/4">
         <p className="w-full">
-          I<span className="underline">{ipAddress}</span>
+          <span className="underline">{ipAddress}</span>
         </p>
         {geo && (
           <p>
