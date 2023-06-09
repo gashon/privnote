@@ -82,7 +82,7 @@ function DropDownLog({
           </p>
         )}
         <div className="w-full flex justify-between items-center">
-          <p className="flex flex-row items-center">User Agent: {userAgent}</p>
+          <p className="flex flex-row items-center">{userAgent}</p>
         </div>
       </div>
     </div>
