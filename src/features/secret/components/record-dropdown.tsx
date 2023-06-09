@@ -66,19 +66,21 @@ function DropDownLog({
 
       <div className="w-3/4">
         <p className="w-full">
-          IP: <strong>{ipAddress}</strong>
+          IP:
+          <span className="underline">ipAddress</span>
         </p>
         {geo && (
           <p>
-            Geo:{' '}
-            <span className="underline">
-              {geo?.city} {geo?.regionName} {geo?.country} {geo?.continent}
-            </span>
+            <strong>
+              {geo?.city}, {geo?.regionName}, {geo?.country}, {geo?.continent}
+            </strong>
           </p>
         )}
         {geo && (
           <p>
-            ({geo?.lon} {geo?.lat}) {geo?.isp} {geo?.zip}
+            {geo?.zip}
+            {geo?.lat && geo?.lon && `(${geo?.lat}, ${geo?.lon})`}{' '}
+            {geo?.isp && `${geo.isp} (ISP)`}
           </p>
         )}
         <div className="w-full flex justify-between items-center">
