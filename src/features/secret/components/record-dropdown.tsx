@@ -65,17 +65,22 @@ function DropDownLog({
       </p>
 
       <div className="w-3/4">
+        <p className="w-full">
+          IP: <strong>{ipAddress}</strong>
+        </p>
         {geo && (
           <p>
             Geo:{' '}
             <span className="underline">
-              {geo?.city} {geo?.region} {geo?.country}
+              {geo?.city} {geo?.regionName} {geo?.country} {geo?.continent}
             </span>
           </p>
         )}
-        <p className="w-full">
-          IP: <strong>{ipAddress}</strong>
-        </p>
+        {geo && (
+          <p>
+            ({geo?.lon} {geo?.lat}) {geo?.isp} {geo?.zip}
+          </p>
+        )}
         <div className="w-full flex justify-between items-center">
           <p className="flex flex-row items-center">User Agent: {userAgent}</p>
         </div>

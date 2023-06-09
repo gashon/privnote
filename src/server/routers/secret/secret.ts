@@ -5,9 +5,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { Updateable } from 'kysely';
-import { Secret, Json } from '@/server/db/types';
+import { Secret } from '@/server/db/types';
 import { TRPCError } from '@trpc/server';
-import { router, publicProcedure, geoip } from '@/server/lib';
+import { router, publicProcedure } from '@/server/lib';
+import { getGeoIp } from '@/server/utils/geoip';
 
 export const secretRouter = router({
   delete: publicProcedure
@@ -109,7 +110,7 @@ export const secretRouter = router({
 
       // update views
       await ctx.db.transaction().execute(async (trx) => {
-        const geo = await geoip.lookup(ctx.ipAddress);
+        const geo = await getGeoIp(ctx.ipAddress);
 
         await Promise.all([
           // increment running count

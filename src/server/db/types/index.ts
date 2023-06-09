@@ -1,4 +1,4 @@
-import { GeoIpLookup } from '@/server/lib';
+import { GeoIpLookup } from '@/server/utils/geoip';
 import { ViewLog as ViewLogTable } from './generated.types';
 export * from './generated.types';
 
