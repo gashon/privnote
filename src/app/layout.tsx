@@ -2,6 +2,7 @@
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import Link from 'next/link';
+import { Analytics } from '@vercel/analytics/react';
 
 import { trpc } from '@/lib';
 
@@ -25,6 +26,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
             content="Send encrypted messages that self-destruct after being read."
           />
           <link rel="icon" href="/favicon.ico" />
+          <Analytics />
         </head>
 
         <body className="bg-neutral-900 min-w-screen min-h-screen">
