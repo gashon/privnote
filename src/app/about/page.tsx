@@ -12,7 +12,7 @@ export default function Home() {
             marginBottom: 10,
           }}
         >
-          <span>TLDR:</span> PrivNote is a free service that lets you send
+          <span>TL;DR:</span> PrivNote is a free service that lets you send
           secret messages securely (such as .env files). You have access to
           detailed view logs and fine-grained control over the message's
           lifetime + the number of views before self destruction.
