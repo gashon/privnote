@@ -42,3 +42,7 @@ PrivNote v.2 is a free service that lets you send secret messages.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+<!-- Analytics  -->
+
+![](https://analytics-fawn-nine.vercel.app/api/analytics/github/beacon?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JfaWQiOiJlOWJhM2U0ZC0yOTI4LTQxZTYtOTQ2ZS1lNTAwZWUyNzRkYTciLCJwcm9qZWN0X2lkIjoiNDE3OGYwOWMtMTFmZi00YTZjLWI0ZDQtMDBiMjhhNmM2OGI4IiwiY3JlYXRlZF9hdCI6IjIwMjQtMDEtMTBUMDM6NTY6NDEuMzIzWiIsImlhdCI6MTcwNDg1OTAwMX0.ZvZAyQlvvh5SGyZVo4BgomOPmjR6gpa6dSZmsQfkZZg)
