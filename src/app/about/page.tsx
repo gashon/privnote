@@ -33,9 +33,8 @@ export default function Home() {
             paddingLeft: 10,
           }}
         >
-          Secrets are never sent to our server. We employ symmetric-key
-          cryptography, specifically the AES-256-GCM (Advanced Encryption
-          Standard with a 256-bit key size using Galois/Counter Mode) algorithm.
+          Secrets are never sent to our server. We use
+          AES-256-GCM (with a 256-bit key size via Galois/Counter Mode) to encrypt.
         </p>
 
         <p
@@ -44,57 +43,53 @@ export default function Home() {
             paddingLeft: 10,
           }}
         >
-          Here's a brief overview of how it works: The client generates a random
-          key with 256 bits of entropy. This key is then used to encrypt the
-          secret message, transforming it into a ciphertext. The encryption key
-          is sent to the server and stored in a database. The server returns a
+          Brief overview: The client generates a random
+          key with 256 bits of entropy. The key is used to encrypt the
+          message. The encryption key is sent to the server and stored in a database (using your anonymous cookie id as a foreign key).
+          The server returns a
           token to the client. This token is used to retrieve the key from the
           server when the secret message needs to be viewed. When the secret
           message is accessed, the server uses the token to fetch the key, and
-          the client uses this key to decrypt the message. AES-256-GCM is a
-          popular encryption algorithm widely used in various sectors because it
-          provides confidentiality, integrity, and origin authenticity.
-        </p>
+          the client uses this key to decrypt the message. In other words, the entire secret is encrypted and embedded in the url only.         </p>
         <p
           style={{
             borderLeft: '4px solid rgba(255, 255, 255, 0.15)',
             paddingLeft: 10,
           }}
         >
-          PrivNote uses anonymous authentication. We do not require you to
-          create an account. We use a single httpOnly private cookie to give you
+          PrivNote uses anonymous auth - a single httpOnly private cookie to give you
           access to your secrets.
         </p>
 
-        <p
-          style={{
-            marginTop: 25,
-          }}
-        >
-          The source code for PrivNote is available on{' '}
-          <a
-            href="https://github.com/gashon/privnote"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            GitHub
-          </a>
-          .
-        </p>
+        {/* <p */}
+        {/*   style={{ */}
+        {/*     marginTop: 25, */}
+        {/*   }} */}
+        {/* > */}
+        {/*   The source code for PrivNote is available on{' '} */}
+        {/*   <a */}
+        {/*     href="https://github.com/gashon/privnote" */}
+        {/*     target="_blank" */}
+        {/*     rel="noopener noreferrer" */}
+        {/*     className="underline" */}
+        {/*   > */}
+        {/*     GitHub */}
+        {/*   </a> */}
+        {/*   . */}
+        {/* </p> */}
 
-        <p>
-          Built by{' '}
-          <a
-            href="https://ghussein.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            gashon
-          </a>
-          .
-        </p>
+        {/* <p> */}
+        {/*   Built by{' '} */}
+        {/*   <a */}
+        {/*     href="https://ghussein.org" */}
+        {/*     target="_blank" */}
+        {/*     rel="noopener noreferrer" */}
+        {/*     className="underline" */}
+        {/*   > */}
+        {/*     gashon */}
+        {/*   </a> */}
+        {/*   . */}
+        {/* </p> */}
       </div>
     </>
   );

@@ -6,6 +6,7 @@ import { CiSettings } from 'react-icons/ci';
 import { trpc, successNotification, errorNotification } from '@/lib';
 import { generateKey, encryptPayload } from '@/utils/crypto';
 import { DropDown } from '@/components';
+import { fallbackCopyTextToClipboard } from '@/utils/fallbacks';
 
 type FormValues = {
   secret: string;
@@ -33,12 +34,17 @@ export function SecretInput() {
 
   const copyToClipboard = useCallback(async (url: string) => {
     try {
-      await navigator.clipboard.writeText(url);
-      successNotification('URL copied to clipboard');
+      setTimeout(() => {
+        navigator.clipboard.writeText(url)
+      }, 0)
+      successNotification('Copied URL to clipboard');
     } catch (error) {
-      console.error('Failed to copy URL to clipboard:', error);
-      errorNotification('Failed to copy URL to clipboard');
+      fallbackCopyTextToClipboard(url, {
+        successMessage: "Copied URL to clipboard",
+        errorMessage: "Failed to copy URL to clipboard"
+      });
     }
+
   }, []);
 
   const createSecret: SubmitHandler<FormValues> = async (values) => {
@@ -53,9 +59,8 @@ export function SecretInput() {
         : undefined,
     });
     const encryptedText = encryptPayload(values.secret, encryptionToken);
-    const url = `${
-      process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
-    }/secret?key=${secret.key}&secret=${encryptedText}`;
+    const url = `${process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000'
+      }/secret?key=${secret.key}&secret=${encryptedText}`;
     setSecretURL(url);
 
     await copyToClipboard(url);

@@ -15,28 +15,6 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn('viewer_id', 'varchar', (col) => col.notNull())
     .execute();
 
-  await db.schema.dropIndex('secret_owner_id_index').execute();
-  await db.schema.dropIndex('view_log_owner_id_index').execute();
-  await db.schema.dropIndex('view_log_viewer_id_index').execute();
-
-  await db.schema
-    .createIndex('secret_owner_id_index')
-    .on('secret')
-    .column('owner_id')
-    .execute();
-
-  await db.schema
-    .createIndex('view_log_owner_id_index')
-    .on('view_log')
-    .column('owner_id')
-    .execute();
-
-  await db.schema
-    .createIndex('view_log_viewer_id_index')
-    .on('view_log')
-    .column('viewer_id')
-    .execute();
-
   // remove user association from secret table
   await db.schema.dropTable('user').execute();
 }
@@ -76,25 +54,4 @@ export async function down(db: Kysely<any>): Promise<void> {
     .addColumn('viewer_id', 'uuid', (col) => col.notNull())
     .execute();
 
-  await db.schema.dropIndex('secret_owner_id_index').execute();
-  await db.schema.dropIndex('view_log_owner_id_index').execute();
-  await db.schema.dropIndex('view_log_viewer_id_index').execute();
-
-  await db.schema
-    .createIndex('secret_owner_id_index')
-    .on('secret')
-    .column('owner_id')
-    .execute();
-
-  await db.schema
-    .createIndex('view_log_owner_id_index')
-    .on('view_log')
-    .column('owner_id')
-    .execute();
-
-  await db.schema
-    .createIndex('view_log_viewer_id_index')
-    .on('view_log')
-    .column('viewer_id')
-    .execute();
 }

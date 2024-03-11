@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { decryptPayload } from '@/utils/crypto';
 import { BsFillClipboardFill } from 'react-icons/bs';
 import { successNotification, errorNotification } from '@/lib';
+import { fallbackCopyTextToClipboard } from '@/utils/fallbacks';
 
 export type SecretContainerProps = {
   encryptedText: string;
@@ -53,7 +54,7 @@ export function SecretContainer({
                 await navigator.clipboard.writeText(decryptedSecret);
                 successNotification('Copied to clipboard');
               } catch (error) {
-                errorNotification('Failed to copy to clipboard');
+                fallbackCopyTextToClipboard(decryptedSecret);
               }
             }}
             className="cursor-pointer w-min"
