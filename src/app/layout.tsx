@@ -2,7 +2,8 @@
 import { Inter } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 import Link from 'next/link';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@gashon/analytics";
+
 
 import { trpc } from '@/lib';
 
@@ -26,7 +27,15 @@ function RootLayout({ children }: { children: React.ReactNode }) {
             content="Send encrypted messages that self-destruct after being read."
           />
           <link rel="icon" href="/favicon.ico" />
-          <Analytics />
+          <Analytics
+            apiKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JfaWQiOiJlOWJhM2U0ZC0yOTI4LTQxZTYtOTQ2ZS1lNTAwZWUyNzRkYTciLCJwcm9qZWN0X2lkIjoiNDE3OGYwOWMtMTFmZi00YTZjLWI0ZDQtMDBiMjhhNmM2OGI4IiwiY3JlYXRlZF9hdCI6IjIwMjQtMDEtMTBUMDM6NTY6NDEuMzIzWiIsImlhdCI6MTcwNDg1OTAwMX0.ZvZAyQlvvh5SGyZVo4BgomOPmjR6gpa6dSZmsQfkZZg"
+            endpoint="https://analytics-fawn-nine.vercel.app/api/analytics"
+            disableOnDev
+            trackSession
+            fingerprintBrowser
+          // metadata={referer ? { referer } : {}}
+          />
+
         </head>
 
         <body className="bg-neutral-900 min-w-screen min-h-screen">

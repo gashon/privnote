@@ -1,10 +1,7 @@
 import { errorNotification, successNotification } from "@/lib";
 
 
-export function fallbackCopyTextToClipboard(text: string, {
-  successMessage,
-  errorMessage
-}: {
+export function fallbackCopyTextToClipboard(text: string, message?: {
   successMessage?: string;
   errorMessage?: string;
 }) {
@@ -22,9 +19,9 @@ export function fallbackCopyTextToClipboard(text: string, {
 
   try {
     document.execCommand('copy');
-    successNotification(successMessage ?? 'Copied to clipboard');
-  } catch (err){
-    errorNotification(errorMessage ?? 'Failed to copy to clipboard');
+    successNotification(message?.successMessage ?? 'Copied to clipboard');
+  } catch (err) {
+    errorNotification(message?.errorMessage ?? 'Failed to copy to clipboard');
   }
 
   document.body.removeChild(textArea);
