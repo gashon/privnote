@@ -146,6 +146,7 @@ export function SecretInput() {
             <button
               type="submit"
               className="w-fit"
+              data-tracking-label="create-secret"
               style={{
                 borderBottom: '3px solid rgba(255, 255, 255, 0.15)',
               }}

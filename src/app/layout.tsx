@@ -33,6 +33,7 @@ function RootLayout({ children }: { children: React.ReactNode }) {
             disableOnDev
             trackSession
             fingerprintBrowser
+            trackClickEvents
           // metadata={referer ? { referer } : {}}
           />
 
