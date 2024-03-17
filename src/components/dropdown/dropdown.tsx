@@ -25,6 +25,7 @@ export const DropDown: FC<DropDownProps> = ({
   return (
     <>
       <div
+        data-tracking-label={storageLabel}
         onClick={() => {
           setIsOpen(!isOpen);
 
