@@ -2,7 +2,9 @@
 
 ## Overview
 
-PrivNote v.2 is a free service that lets you send secret messages with information about the openner (ip, isp, user-agent, and timestamp)
+> PrivNote v.2 is a free service that lets you send secret messages with information about who opened your secret (ip, isp, user-agent, and timestamp) and improve your control of outbound secrets (expiration dates, max view count, etc).
+
+Secrets are encrypted and embedded inside of the url parameters such that secrets are never sent to a server directly in any form.
 
 ![image](https://github.com/user-attachments/assets/6fab50ab-8e2c-498c-9b52-9a9f7629cb41)
 
