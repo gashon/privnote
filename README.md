@@ -2,19 +2,9 @@
 
 ## Overview
 
-PrivNote v.2 is a free service that lets you send secret messages.
+PrivNote v.2 is a free service that lets you send secret messages with information about the openner (ip, isp, user-agent, and timestamp)
 
-## Key Directories and Files
-
-- `src/app/`: Application pages.
-- `src/features/`: Stores different features used in the app.
-- `src/server/`: Holds the server-side code.
-- `src/server/db/`: Contains database related files, including migrations.
-- `src/utils/`: Utilities used in the application.
-- `src/components/`: Stores reusable React components.
-- `src/lib/`: Contains library functions.
-- `public/`: Stores static files like images.
-- `.env`: Environment variables file.
+![image](https://github.com/user-attachments/assets/6fab50ab-8e2c-498c-9b52-9a9f7629cb41)
 
 ## Prerequisites
 
