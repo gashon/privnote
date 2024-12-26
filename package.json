@@ -19,7 +19,7 @@
     "lhci:desktop": "lhci autorun --collect.settings.preset=desktop"
   },
   "dependencies": {
-    "@gashon/analytics": "^1.8.3",
+    "@gashon/analytics": "^1.9.0",
     "@tanstack/react-query": "^4.29.7",
     "@trpc/client": "^10.27.3",
     "@trpc/next": "^10.28.0",
